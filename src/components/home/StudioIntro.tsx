@@ -1,71 +1,109 @@
+import Image from "next/image";
 import { studio, ui } from "@/content/site";
+import { images } from "@/content/images";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeader } from "@/components/ui/SectionHeader";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ArrowUpRight } from "@/components/ui/Icons";
 
+/**
+ * Studio introduction, composed as one piece:
+ * 1. Short two-line headline on the grid.
+ * 2. A tall photograph on the left, the lead, text and facts on the right.
+ * 3. A wide cinematic photograph closing the section.
+ */
 export function StudioIntro() {
   return (
-    <section id="studio" aria-labelledby="studio-heading" className="scroll-mt-[var(--header-h)] bg-ivory">
-      <div className="container-site py-24 lg:py-36">
-        <Reveal>
-          <SectionHeader number={studio.number} label={studio.label} aside={studio.aside} />
-        </Reveal>
-
-        <div className="mt-14 grid gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-x-6">
-          <Reveal className="lg:col-span-6" delay={80}>
-            <h2 id="studio-heading" className="display-lg text-ink">
-              <span className="block">{studio.headline[0]}</span>
-              <span className="serif-italic block text-muted">{studio.headline[1]}</span>
-            </h2>
+    <section id="studio" aria-labelledby="studio-heading" className="scroll-mt-[var(--header-h)] bg-paper">
+      <div className="container-site section-y">
+        {/* 1. Headline */}
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-x-8">
+          <Reveal className="lg:col-span-3">
+            <SectionLabel>{studio.label}</SectionLabel>
           </Reveal>
-
-          <Reveal className="lg:col-span-5 lg:col-start-8 lg:pt-3" delay={180}>
-            <div className="space-y-6 text-[15px] leading-[1.8] text-charcoal lg:text-base">
-              {studio.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
+          <Reveal delay={80} className="lg:col-span-9">
+            <h2 id="studio-heading" className="t-h2 text-ink">
+              <span className="block">{studio.headline[0]}</span>
+              <span className="block text-muted">{studio.headline[1]}</span>
+            </h2>
           </Reveal>
         </div>
 
-        {/* Fact strip: three columns, hairline top and bottom, no cards */}
-        <Reveal delay={240} className="mt-20 lg:mt-28">
-          <dl className="grid border-y hairline sm:grid-cols-3">
-            {studio.facts.map((fact, index) => (
-              <div
-                key={fact.term}
-                className={[
-                  "group py-7 sm:py-9",
-                  index > 0 ? "border-t hairline sm:border-t-0 sm:border-l sm:pl-8" : "",
-                  index < studio.facts.length - 1 ? "sm:pr-8" : "",
-                ].join(" ")}
-              >
-                <dt className="label-xs flex items-center gap-3 text-muted">
-                  <span aria-hidden="true" className="h-px w-3 bg-accent transition-[width] duration-500 ease-expo group-hover:w-6" />
-                  {fact.term}
-                </dt>
-                <dd className="mt-4 font-serif text-xl font-light leading-snug text-ink">
-                  {"href" in fact ? (
-                    <a
-                      href={fact.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/link inline-flex items-center gap-2 transition-colors duration-500 hover:text-accent"
-                    >
-                      {fact.detail}
-                      <ArrowUpRight
-                        size={14}
-                        className="transition-transform duration-500 ease-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-                      />
-                      <span className="sr-only">{ui.opensInNewTab}</span>
-                    </a>
-                  ) : (
-                    fact.detail
-                  )}
-                </dd>
+        {/* 2. Photograph + text */}
+        <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-12 lg:items-end lg:gap-x-8">
+          <Reveal variant="image" className="lg:col-span-5">
+            <figure>
+              <div className="relative aspect-[4/5] overflow-hidden bg-mist">
+                <Image
+                  src={images.featureDetail.src}
+                  alt={images.featureDetail.alt}
+                  fill
+                  sizes="(min-width: 1600px) 600px, (min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
+                />
               </div>
-            ))}
-          </dl>
+              <figcaption className="t-small mt-4 text-muted">{studio.detailCaption}</figcaption>
+            </figure>
+          </Reveal>
+
+          <div className="lg:col-span-6 lg:col-start-7 lg:pb-10">
+            <Reveal delay={100}>
+              <p className="t-lead text-ink">{studio.lead}</p>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="t-body mt-8 max-w-[34rem] text-graphite">{studio.text}</p>
+            </Reveal>
+
+            <Reveal delay={220} className="mt-12 lg:mt-16">
+              <dl className="border-t border-line">
+                {studio.facts.map((fact) => (
+                  <div
+                    key={fact.term}
+                    className="grid gap-1 border-b border-line py-5 sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-6"
+                  >
+                    <dt className="t-small text-muted">{fact.term}</dt>
+                    <dd className="text-lg tracking-[-0.01em] text-ink">
+                      {"href" in fact ? (
+                        <a
+                          href={fact.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-2"
+                        >
+                          <span className="link-underline group-hover:link-underline-active">{fact.detail}</span>
+                          <ArrowUpRight
+                            size={13}
+                            className="text-accent transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                          />
+                          <span className="sr-only">{ui.opensInNewTab}</span>
+                        </a>
+                      ) : (
+                        fact.detail
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* 3. Wide photograph */}
+        <Reveal variant="image" className="mt-20 lg:mt-32">
+          <figure>
+            <div className="relative aspect-[4/3] overflow-hidden bg-mist sm:aspect-[21/9]">
+              <Image
+                src={images.featureMain.src}
+                alt={images.featureMain.alt}
+                fill
+                sizes="(min-width: 1600px) 1480px, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="t-small mt-4 flex justify-between gap-6 text-muted">
+              <span>{studio.wideCaption}</span>
+              <span className="hidden sm:inline">Helvetique architecture</span>
+            </figcaption>
+          </figure>
         </Reveal>
       </div>
     </section>

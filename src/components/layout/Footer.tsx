@@ -1,104 +1,131 @@
 import Link from "next/link";
 import { company, navigation, portmix, ui } from "@/content/site";
-import { ArrowUpRight } from "@/components/ui/Icons";
+import { Logo } from "@/components/brand/Logo";
+import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
+/**
+ * Footer in three bands on Architectural Black:
+ * 1. Closing call to action with the phone number.
+ * 2. The reverse master logo next to office, navigation, portfolio and company columns.
+ * 3. Legal line with a back-to-top link.
+ * The red line is used once, as the brand signature above the call to action.
+ */
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t hairline-light bg-night text-ivory">
+    <footer className="bg-night text-white">
       <div className="container-site">
-        {/* Large wordmark */}
-        <div className="border-b hairline-light pb-14 pt-16 lg:pb-20 lg:pt-24">
-          <span aria-hidden="true" className="mb-10 block h-px w-10 bg-accent lg:mb-14" />
-          <p className="font-serif text-[clamp(2.25rem,0.9rem+7vw,9.5rem)] font-light leading-[0.96] tracking-[-0.03em]">
-            <span className="block">{company.wordmark[0]}</span>
-            <span className="serif-italic block text-stone">{company.wordmark[1]}</span>
-          </p>
-        </div>
-
-        {/* Navigation and contact */}
-        <div className="grid gap-12 py-14 lg:grid-cols-12 lg:gap-x-6 lg:py-20">
-          <div className="lg:col-span-3">
-            <p className="label-xs flex items-center gap-3 text-stone"><span aria-hidden="true" className="h-px w-4 bg-accent" />{ui.footer.sitemap}</p>
-            <nav aria-label={ui.footerNav} className="mt-6">
-              <ul className="space-y-3">
-                {navigation.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href} className="group inline-flex items-center gap-3 text-sm text-ivory/80 hover:text-ivory">
-                      <span
-                        aria-hidden="true"
-                        className="h-px w-0 bg-accent transition-[width] duration-500 ease-expo group-hover:w-4"
-                      />
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <a
-                    href={portmix.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-3 text-sm text-ivory/80 hover:text-ivory"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="h-px w-0 bg-accent transition-[width] duration-500 ease-expo group-hover:w-4"
-                    />
-                    {portmix.name}
-                    <ArrowUpRight size={12} className="text-stone" />
-                    <span className="sr-only">{ui.opensInNewTab}</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+        {/* 1. Call to action */}
+        <div className="grid gap-10 border-b border-white/15 py-20 lg:grid-cols-12 lg:items-end lg:gap-x-8 lg:py-28">
+          <div className="lg:col-span-8">
+            <p className="t-small flex items-center gap-4 text-white/60">
+              <span aria-hidden="true" className="block h-[2px] w-10 bg-accent" />
+              {ui.footer.ctaLabel}
+            </p>
+            <p className="mt-8 text-[clamp(2.25rem,1.3rem+3.4vw,4.75rem)] leading-[1.02] tracking-[-0.04em]">
+              <span className="block">{ui.footer.ctaTitle[0]}</span>
+              <span className="block text-white/50">{ui.footer.ctaTitle[1]}</span>
+            </p>
           </div>
-
-          <div className="lg:col-span-3">
-            <p className="label-xs flex items-center gap-3 text-stone"><span aria-hidden="true" className="h-px w-4 bg-accent" />{ui.footer.office}</p>
-            <address className="mt-6 text-sm not-italic leading-relaxed text-ivory/80">
-              {company.legalName}
-              <br />
-              {company.address.street}
-              <br />
-              {company.address.city}, {company.address.countryShort}
-            </address>
-            <a href={company.phone.href} className="mt-4 inline-block text-sm text-ivory hover:text-stone">
+          <div className="flex flex-col gap-6 lg:col-span-4 lg:items-end lg:text-right">
+            <a
+              href={company.phone.href}
+              className="text-[clamp(1.5rem,1.2rem+0.9vw,2rem)] tracking-[-0.03em] text-white transition-colors duration-500 hover:text-white/70"
+            >
               {company.phone.display}
             </a>
-          </div>
-
-          <div className="lg:col-span-3 lg:col-start-10">
-            <p className="label-xs flex items-center gap-3 text-stone"><span aria-hidden="true" className="h-px w-4 bg-accent" />{ui.footer.practice}</p>
-            <ul className="mt-6 space-y-3 text-sm text-ivory/80">
-              {ui.footer.practiceList.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            <Link
+              href="#contact"
+              className="group inline-flex h-13 items-center gap-6 self-start bg-accent px-6 text-[0.9375rem] font-medium text-white transition-colors duration-500 hover:bg-[#930000] lg:self-end"
+            >
+              {ui.footer.ctaButton}
+              <ArrowRight size={14} className="transition-transform duration-500 ease-out group-hover:translate-x-1" />
+            </Link>
           </div>
         </div>
 
-        {/* Legal row */}
-        <div className="flex flex-col gap-4 border-t hairline-light py-8 text-xs text-stone sm:flex-row sm:items-center sm:justify-between">
+        {/* 2. Logo and columns */}
+        <div className="grid gap-14 py-16 lg:grid-cols-12 lg:gap-x-8 lg:py-20">
+          <div className="lg:col-span-4">
+            <Link href="#home" aria-label={company.legalName} className="inline-block">
+              <Logo variant="reverse" alt="" className="w-[260px] sm:w-[300px]" />
+            </Link>
+          </div>
+
+          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4 lg:gap-x-8">
+            <div>
+              <p className="t-small text-white/45">{ui.footer.office}</p>
+              <address className="t-small mt-5 not-italic leading-relaxed text-white/80">
+                {company.address.street}
+                <br />
+                {company.address.city}
+                <br />
+                {company.address.country}
+              </address>
+              <a href={company.phone.href} className="t-small mt-3 inline-block text-white hover:text-white/70">
+                {company.phone.display}
+              </a>
+            </div>
+
+            <div>
+              <p className="t-small text-white/45">{ui.footer.navigation}</p>
+              <nav aria-label={ui.footerNav} className="mt-5">
+                <ul className="space-y-2.5">
+                  {navigation.map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href} className="group t-small text-white/80 hover:text-white">
+                        <span className="link-underline group-hover:link-underline-active">{item.label}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+
+            <div>
+              <p className="t-small text-white/45">{ui.footer.portfolio}</p>
+              <a
+                href={portmix.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group t-small mt-5 inline-flex items-center gap-2 text-white"
+              >
+                <span className="link-underline group-hover:link-underline-active">{portmix.name}</span>
+                <ArrowUpRight
+                  size={12}
+                  className="text-accent transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+                <span className="sr-only">{ui.opensInNewTab}</span>
+              </a>
+              <p className="t-small mt-2 max-w-[14rem] text-white/55">{ui.footer.portfolioText}</p>
+            </div>
+
+            <div>
+              <p className="t-small text-white/45">{ui.footer.company}</p>
+              <p className="t-small mt-5 leading-relaxed text-white/80">
+                {company.legalName}
+                <br />
+                <span className="text-white/55">ID {company.companyId}</span>
+                <br />
+                <span className="text-white/55">{company.vatNote}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. Legal line */}
+        <div className="t-small flex flex-col gap-4 border-t border-white/15 py-8 text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {company.legalName}
           </p>
-          <p className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <span>ID {company.companyId}</span>
-            <a
-              href={portmix.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-ivory/80 hover:text-ivory"
-            >
-              {ui.footer.portfolioOn} {portmix.name}
-              <ArrowUpRight
-                size={11}
-                className="transition-transform duration-500 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-              <span className="sr-only">{ui.opensInNewTab}</span>
-            </a>
-          </p>
+          <Link href="#home" className="group inline-flex items-center gap-2 text-white/70 hover:text-white">
+            {ui.footer.backToTop}
+            <ArrowUpRight
+              size={12}
+              className="-rotate-45 transition-transform duration-500 ease-out group-hover:-translate-y-0.5"
+            />
+          </Link>
         </div>
       </div>
     </footer>

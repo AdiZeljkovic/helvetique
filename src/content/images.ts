@@ -9,12 +9,13 @@
  * Nothing in the components needs to change.
  *
  * Aspect ratios are intentional for the layouts they sit in:
- *   hero               4:5   tall, sits beside the headline
+ *   hero               3:2   full-bleed, behind the headline
  *   featureMain        3:2   wide editorial image
  *   featureDetail      3:4   companion detail
- *   philosophy         4:5   dark manifesto section
- *   portfolio*         4:3 / 3:4 / 2:1 / 1:1  asymmetric grid
- *   connection         4:5   PortMix relationship section
+ *   presence           16:10 Sarajevo panorama in the presence section
+ *   expertise*         4:5   interactive expertise panel
+ *   philosophy         16:10 full-bleed background of the approach section
+ *   portfolio*         4:3 / 4:5 / 1:1 / 16:10  asymmetric grid
  */
 
 export type SiteImage = {
@@ -27,27 +28,57 @@ export type SiteImage = {
 export const images = {
   hero: {
     src: "/images/hero.jpg",
-    alt: "Sunčeva svjetlost pada oštrom dijagonalom preko sirovog betonskog zida i poda",
-    width: 1600,
-    height: 2000,
+    alt: "Betonski prolaz u kojem dnevno svjetlo kroz niz otvora iscrtava ritam na zidu od teraca",
+    width: 2400,
+    height: 1600,
   },
   featureMain: {
     src: "/images/feature-main.jpg",
-    alt: "Konzolna betonska fasada moderne zgrade baca duboku sjenu",
+    alt: "Crno-bijeli detalj arhitekture sa stubovima, prepuštenom pločom i oštrim sjenama",
     width: 2000,
     height: 1333,
   },
   featureDetail: {
     src: "/images/feature-detail.jpg",
-    alt: "Prošarano dnevno svjetlo na betonskom zidu iznad rebrastog betonskog podnožja",
+    alt: "Prošarano dnevno svjetlo na zidu od pločica iznad rebrastog betonskog podnožja",
     width: 1200,
     height: 1600,
+  },
+  presence: {
+    src: "/images/presence.jpg",
+    alt: "Pogled na Sarajevo s brda: krovovi, minaret, gradski tornjevi i planine u izmaglici",
+    width: 2400,
+    height: 1500,
+  },
+  expertiseArchitecture: {
+    src: "/images/expertise-architecture.jpg",
+    alt: "Crno-bijela fasada stambene zgrade s ritmom vertikalnih otvora",
+    width: 1600,
+    height: 2000,
+  },
+  expertiseInteriors: {
+    src: "/images/expertise-interiors.jpg",
+    alt: "Svijetao enterijer s lučnom nišom, stepenastim kaminom i foteljom",
+    width: 1600,
+    height: 2000,
+  },
+  expertiseBespoke: {
+    src: "/images/expertise-bespoke.jpg",
+    alt: "Drveni element namještaja po mjeri položen na ručne skice i nacrte",
+    width: 1600,
+    height: 2000,
+  },
+  expertiseCoordination: {
+    src: "/images/expertise-coordination.jpg",
+    alt: "Radni sto s arhitektonskim nacrtima, naočalama, olovkom i stonom lampom",
+    width: 1600,
+    height: 2000,
   },
   philosophy: {
     src: "/images/philosophy.jpg",
     alt: "Svjetlo s prozora razliveno po kamenom podu uz betonski stub u tamnoj prostoriji",
-    width: 1600,
-    height: 2000,
+    width: 2400,
+    height: 1500,
   },
   portfolioArchitecture: {
     src: "/images/portfolio-architecture.jpg",
@@ -63,21 +94,15 @@ export const images = {
   },
   portfolioBespoke: {
     src: "/images/portfolio-bespoke.jpg",
-    alt: "Dnevni boravak s vidljivim drvenim gredama, tamnim zidovima i kamenim stolićem",
+    alt: "Dnevno svjetlo pada preko hrastovog poda uz ugradni drveni namještaj",
     width: 2000,
-    height: 1000,
+    height: 1250,
   },
   portfolioDetails: {
     src: "/images/portfolio-details.jpg",
     alt: "Drvena klupa od letvica uz betonski zid pod sjenama lišća",
     width: 1200,
     height: 1200,
-  },
-  connection: {
-    src: "/images/connection.jpg",
-    alt: "Betonska fasada s ritmom uvučenih prozora i vertikalnih lamela pod oblačnim nebom",
-    width: 1400,
-    height: 1750,
   },
 } as const satisfies Record<string, SiteImage>;
 

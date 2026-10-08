@@ -1,44 +1,37 @@
 import Link from "next/link";
 import { company } from "@/content/site";
 import { cn } from "@/lib/cn";
+import { Logo } from "@/components/brand/Logo";
 
 type WordmarkProps = {
-  tone?: "ink" | "ivory";
+  tone?: "dark" | "light";
   className?: string;
   onClick?: () => void;
 };
 
 /**
- * Typographic logo: "HEL VETIQUE" with a deliberate word gap, and a muted
- * second line. Links back to the top of the page.
+ * The master logo as a home link, 220 px wide (brand minimum on screen).
+ * Both versions are stacked and crossfade, so the header can switch from the
+ * reverse logo over the hero photograph to the primary logo on white.
  */
-export function Wordmark({ tone = "ink", className, onClick }: WordmarkProps) {
+export function Wordmark({ tone = "dark", className, onClick }: WordmarkProps) {
   return (
-    <Link
-      href="#home"
-      onClick={onClick}
-      className={cn("group inline-flex flex-col gap-1 leading-none", className)}
-    >
-      <span
+    <Link href="#home" onClick={onClick} aria-label={company.legalName} className={cn("relative block w-[220px]", className)}>
+      <Logo
+        variant="primary"
+        alt=""
+        eager
+        className={cn("w-full transition-opacity duration-500", tone === "dark" ? "opacity-100" : "opacity-0")}
+      />
+      <Logo
+        variant="reverse"
+        alt=""
+        eager
         className={cn(
-          "font-sans text-[13px] font-medium uppercase tracking-[0.3em]",
-          tone === "ink" ? "text-ink" : "text-ivory",
+          "absolute inset-0 w-full transition-opacity duration-500",
+          tone === "light" ? "opacity-100" : "opacity-0",
         )}
-      >
-        {company.wordmark[0]}
-      </span>
-      <span
-        className={cn(
-          "label-xs flex items-center gap-2",
-          tone === "ink" ? "text-muted" : "text-stone",
-        )}
-      >
-        <span
-          aria-hidden="true"
-          className="inline-block h-px w-3 bg-accent transition-[width] duration-500 ease-expo group-hover:w-5"
-        />
-        {company.wordmark[1]}
-      </span>
+      />
     </Link>
   );
 }

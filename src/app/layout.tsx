@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader } from "next/font/google";
+import { Host_Grotesk } from "next/font/google";
 import { seo, company } from "@/content/site";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin", "latin-ext"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
+const host = Host_Grotesk({
+  variable: "--font-host",
   subsets: ["latin", "latin-ext"],
   display: "swap",
 });
@@ -50,12 +42,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang={seo.lang} className={`${newsreader.variable} ${inter.variable} h-full antialiased`}>
+    <html lang={seo.lang} className={`${host.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Marks JS as available so scroll-reveal styles only apply when they can be undone. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js=''" }} />
       </head>
-      <body className="min-h-full flex flex-col bg-ivory text-ink">{children}</body>
+      <body className="min-h-full flex flex-col bg-paper text-ink">{children}</body>
     </html>
   );
 }

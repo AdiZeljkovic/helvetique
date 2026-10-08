@@ -28,11 +28,11 @@ production origin before deploying (it feeds canonical URLs, Open Graph,
 | `src/content/images.ts`       | Image registry (paths, alt text, dimensions).                  |
 | `public/images/`              | Photography (Pexels stock), see the README inside.             |
 | `src/app/globals.css`         | Design tokens (palette, type, easing), utilities, reveal CSS.  |
-| `src/app/layout.tsx`          | Fonts (Cormorant Garamond + Inter via `next/font`), metadata.  |
+| `src/app/layout.tsx`          | Font (Host Grotesk via `next/font`), metadata.                 |
 | `src/app/page.tsx`            | Section order and JSON-LD structured data.                     |
 | `src/components/layout/`      | Header, mobile menu, wordmark, footer.                         |
 | `src/components/home/`        | One component per section.                                     |
-| `src/components/ui/`          | Button, ArrowLink, SectionLabel, Reveal, icons.                |
+| `src/components/ui/`          | Button, SectionLabel, Reveal, icons.                           |
 | `src/lib/contact.ts`          | Contact form submission boundary (see below).                  |
 | `scripts/fetch-stock-photos.mjs` | Downloads and crops the selected Pexels photographs.        |
 | `scripts/generate-placeholders.mjs` | Renders abstract placeholders (no longer used by default). |
@@ -57,12 +57,24 @@ accepts a JSON POST of `{ name, email, phone?, subject, message }`, or replace
 
 ## Design notes
 
-- Palette: ivory `#F3F0E9`, beige `#DED7CC`, stone `#C9C0B3`, warm white
-  `#F8F6F1`, near black `#151515`, charcoal `#242321`, muted `#625E58` (darkened from #77736D for WCAG AA contrast on beige),
-  accent red `#B7191D` (hairlines, active states, hover only).
-- Type: Newsreader (light, true italic, optical sizes) for headlines, Inter for body and labels. Chosen over Cormorant Garamond because Cormorant draws Bosnian carons (š, ž, č) floating high above the letter.
-- Grid: 12 columns on desktop, 1440px content width, gutters 20/24/48/80px.
-- Motion: opt-in scroll reveals and a faint hero parallax, both disabled for
+- Direction: contemporary Swiss minimalism. White ground, one grotesk
+  typeface, large photography, a 12-column grid with section names in the
+  left three columns and content on the right.
+- Logo: the client's master PNG (`Helvetique-logo-vektorski.png`), cropped to
+  the artwork as `public/brand/helvetique-logo.png`, with a reverse version
+  (`helvetique-logo-reverse.png`) where only the black letters are white and the
+  red bars are unchanged. Rendered by `src/components/brand/Logo.tsx`, unoptimised
+  for sharpness. Per the brand guidelines: never retype, stretch or recolour it,
+  keep at least 220 px width on screen and clear space of one ARCHITECTURE cap
+  height around it.
+- Palette (from the brand guidelines): Architectural Black `#090909`,
+  Signature Red `#C10000`, Paper White `#F7F6F2` (alternate sections),
+  Structural Grey `#6C6C6C`, plus white `#FFFFFF`, graphite `#3D3D3D` and
+  lines `#E3E3E0`. Red is an accent only: logo bars, buttons, small markers.
+- Type: Host Grotesk throughout, regular weight with tight tracking on
+  large sizes. Checked for correct rendering of č, ć, š, ž, đ.
+- Grid: 12 columns on desktop, 1600px max width, gutters 20/32/48/64px.
+- Motion: slow scroll reveals and a faint hero parallax, both disabled for
   `prefers-reduced-motion`.
 - Only verified company information is published. No invented history,
   team, statistics or project names.

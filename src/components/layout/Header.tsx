@@ -1,35 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { navigation, portmix, ui } from "@/content/site";
 import { cn } from "@/lib/cn";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { MobileMenu } from "./MobileMenu";
 import { Wordmark } from "./Wordmark";
 
-const SECTION_IDS = ["home", ...navigation.map((item) => item.href.slice(1))];
+const SECTION_IDS = navigation.map((item) => item.href.slice(1));
 
 /**
- * Fixed header. Transparent over the hero, then settles onto a warm ivory
- * ground with a hairline once the page is scrolled. Tracks the section in
- * view to mark the active navigation item with a 2px red line.
+ * Fixed header. White type over the full-bleed hero, then a white bar with a
+ * hairline once the page scrolls. The section in view is underlined.
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string>("home");
+  const [active, setActive] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState(false);
-  const progressRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     let frame = 0;
     const update = () => {
       frame = 0;
-      setScrolled(window.scrollY > 32);
-      // Reading progress: a 2px red line that grows across the top of the page.
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`;
+      setScrolled(window.scrollY > 24);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -47,15 +41,13 @@ export function Header() {
       (el): el is HTMLElement => el !== null,
     );
     if (sections.length === 0) return;
-
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) setActive(entry.target.id);
         }
       },
-      // A narrow band just above the vertical centre decides the active section.
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
     );
     sections.forEach((section) => io.observe(section));
     return () => io.disconnect();
@@ -64,35 +56,30 @@ export function Header() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), []);
 
-  const solid = scrolled || menuOpen;
+  // While the mobile menu is open the header sits on the dark menu panel.
+  const solid = scrolled && !menuOpen;
+  const tone = solid ? "dark" : "light";
 
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-ink focus:px-4 focus:py-3 focus:text-ivory label"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-ink focus:px-4 focus:py-3 focus:text-white"
       >
         {ui.skipToContent}
       </a>
 
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-700 ease-soft",
-          solid
-            ? "border-b hairline bg-ivory/90 backdrop-blur-[6px] supports-[backdrop-filter]:bg-ivory/85"
-            : "border-b border-transparent bg-transparent",
+          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-500",
+          solid ? "border-line bg-white/95 backdrop-blur-sm" : "border-transparent bg-transparent",
         )}
       >
-        <span
-          ref={progressRef}
-          aria-hidden="true"
-          className="absolute left-0 top-0 h-[2px] w-full origin-left scale-x-0 bg-accent"
-        />
         <div className="container-site flex h-[var(--header-h)] items-center justify-between">
-          <Wordmark onClick={closeMenu} />
+          <Wordmark tone={tone} onClick={closeMenu} />
 
-          <nav aria-label={ui.primaryNav} className="hidden items-center gap-9 lg:flex">
-            <ul className="flex items-center gap-9">
+          <nav aria-label={ui.primaryNav} className="hidden items-center gap-10 lg:flex">
+            <ul className="flex items-center gap-8">
               {navigation.map((item) => {
                 const isActive = active === item.href.slice(1);
                 return (
@@ -101,36 +88,28 @@ export function Header() {
                       href={item.href}
                       aria-current={isActive ? "true" : undefined}
                       className={cn(
-                        "group relative block py-2 label transition-colors duration-500",
-                        isActive ? "text-ink" : "text-ink/70 hover:text-ink",
+                        "group relative py-2 text-[0.9375rem] transition-colors duration-500",
+                        solid ? "text-ink" : "text-white",
                       )}
                     >
-                      {item.label}
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "absolute inset-x-0 -bottom-px h-[2px] origin-left bg-accent transition-transform duration-500 ease-expo",
-                          isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
-                        )}
-                      />
+                      <span className={cn("link-underline group-hover:link-underline-active", isActive && "link-underline-active")}>
+                        {item.label}
+                      </span>
                     </Link>
                   </li>
                 );
               })}
             </ul>
-
-            <span aria-hidden="true" className="h-5 w-px bg-ink/20" />
-
             <a
               href={portmix.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 label text-ink transition-colors duration-500 hover:text-accent"
+              className="group inline-flex items-center gap-2 border border-accent bg-accent px-4 py-2 text-[0.9375rem] text-white transition-colors duration-500 hover:border-[#930000] hover:bg-[#930000]"
             >
-              {portmix.label}
+              {portmix.name}
               <ArrowUpRight
                 size={12}
-                className="transition-transform duration-500 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
               <span className="sr-only">{ui.opensInNewTab}</span>
             </a>
@@ -141,20 +120,26 @@ export function Header() {
             onClick={toggleMenu}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className="group relative -mr-2 flex h-11 w-11 items-center justify-center lg:hidden"
+            className="group relative flex h-12 w-12 items-center justify-center bg-accent text-white transition-colors duration-500 hover:bg-[#930000] lg:hidden"
           >
             <span className="sr-only">{menuOpen ? ui.closeMenu : ui.openMenu}</span>
-            <span aria-hidden="true" className="relative block h-3 w-6">
+            <span aria-hidden="true" className="relative block h-[14px] w-[22px]">
               <span
                 className={cn(
-                  "absolute left-0 top-0 block h-px w-6 bg-ink transition-transform duration-500 ease-expo",
-                  menuOpen && "translate-y-[5.5px] rotate-45",
+                  "absolute left-0 top-0 block h-[2px] w-full bg-current transition-transform duration-500 ease-out",
+                  menuOpen && "translate-y-[6px] rotate-45",
                 )}
               />
               <span
                 className={cn(
-                  "absolute bottom-0 left-0 block h-px w-6 bg-ink transition-transform duration-500 ease-expo",
-                  menuOpen && "-translate-y-[5.5px] -rotate-45",
+                  "absolute left-0 top-[6px] block h-[2px] w-full bg-current transition-opacity duration-300",
+                  menuOpen && "opacity-0",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute left-0 top-[12px] block h-[2px] w-full bg-current transition-transform duration-500 ease-out",
+                  menuOpen && "-translate-y-[6px] -rotate-45",
                 )}
               />
             </span>

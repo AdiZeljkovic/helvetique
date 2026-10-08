@@ -1,68 +1,72 @@
 import Image from "next/image";
-import { philosophy, ui } from "@/content/site";
+import { philosophy } from "@/content/site";
 import { images } from "@/content/images";
-import { FigurePlate } from "@/components/ui/FigurePlate";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ScrollWords } from "./ScrollWords";
 
 /**
- * Cinematic dark section. The photograph occupies the left seven columns and
- * bleeds to the viewport edge; a short statement in ivory sits to the right.
+ * The one dark, cinematic moment on the page. A full-bleed photograph, a large
+ * statement whose words light up while scrolling, and four principles at the foot.
  */
 export function Philosophy() {
-  const [first, second, last] = philosophy.statement;
-
   return (
-    <section aria-labelledby="philosophy-heading" className="bg-night text-ivory">
-      <div className="container-site">
-        <div className="grid lg:grid-cols-12 lg:gap-x-6">
-          <Reveal variant="image" className="relative bleed-x lg:col-span-7 lg:bleed-left lg:mr-0">
-            <div className="relative aspect-[4/5] max-h-[80svh] w-full overflow-hidden bg-charcoal lg:aspect-auto lg:h-[min(100svh,900px)] lg:max-h-none">
-              <Image
-                src={images.philosophy.src}
-                alt={images.philosophy.alt}
-                fill
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-            <FigurePlate
-              index={philosophy.figure.index}
-              title={philosophy.figure.title}
-              meta={philosophy.figure.meta}
-              tone="night"
-              className="absolute bottom-0 right-0"
-            />
-          </Reveal>
+    <section aria-labelledby="philosophy-heading" className="relative overflow-hidden bg-night text-white">
+      {/* Background photograph with legibility gradients */}
+      <div aria-hidden="true" className="absolute inset-0">
+        <Image
+          src={images.philosophy.src}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[70%_50%]"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(9,9,9,0.9)_0%,rgba(9,9,9,0.55)_42%,rgba(9,9,9,0)_80%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(9,9,9,0.9)_0%,rgba(9,9,9,0)_40%)]" />
+      </div>
 
-          <div className="flex flex-col justify-center py-20 lg:col-span-4 lg:col-start-9 lg:py-28">
-            <Reveal>
-              <span className="label-xs flex items-center gap-4 text-stone">
-                <span aria-hidden="true" className="h-px w-8 bg-accent" />
-                {ui.approach}
-              </span>
-            </Reveal>
-            <Reveal delay={100}>
-              <h2 id="philosophy-heading" className="display-md mt-10 text-ivory">
-                <span className="block">{first}</span>
-                <span className="block">{second}</span>
-                <span className="serif-italic block text-stone">{last}</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={200}>
-              <p className="mt-10 max-w-[26rem] text-[15px] leading-[1.8] text-stone">{philosophy.text}</p>
-            </Reveal>
-            <Reveal delay={260}>
-              <p className="label-xs mt-14 flex flex-wrap items-center gap-x-4 gap-y-2 text-stone/80">
-                {ui.manifestoWords.map((word, i) => (
-                  <span key={word} className="flex items-center gap-4">
-                    {i > 0 ? <span aria-hidden="true" className="h-[3px] w-[3px] bg-accent" /> : null}
-                    {word}
-                  </span>
-                ))}
-              </p>
-            </Reveal>
-          </div>
+      <div className="container-site relative flex min-h-[100svh] flex-col justify-between gap-24 py-24 lg:py-32">
+        {/* Top row */}
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-x-8">
+          <Reveal className="lg:col-span-3">
+            <SectionLabel tone="light">{philosophy.label}</SectionLabel>
+          </Reveal>
+          <Reveal delay={80} className="lg:col-span-4 lg:col-start-9 lg:text-right">
+            <p className="t-small text-white/60">{philosophy.aside}</p>
+          </Reveal>
         </div>
+
+        {/* Statement */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-x-8">
+          <h2
+            id="philosophy-heading"
+            className="text-[clamp(2.5rem,1.4rem+4.2vw,6.25rem)] leading-[1] tracking-[-0.045em] lg:col-span-10"
+          >
+            <ScrollWords text={philosophy.statement} />
+          </h2>
+          <Reveal delay={120} className="lg:col-span-4">
+            <p className="t-body text-white/70">{philosophy.text}</p>
+          </Reveal>
+        </div>
+
+        {/* Principles */}
+        <Reveal delay={160}>
+          <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {philosophy.principles.map((principle, index) => (
+              <li key={principle.title} className="group relative border-t border-white/20 pt-6">
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-px left-0 h-px w-0 bg-accent transition-[width] duration-700 ease-out group-hover:w-full"
+                />
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-[1.375rem] tracking-[-0.02em] text-white">{principle.title}</h3>
+                  <span className="t-small tabular-nums text-white/40">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <p className="t-small mt-3 max-w-[18rem] text-white/60">{principle.text}</p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

@@ -8,15 +8,19 @@ used to imply endorsement. They were fetched and cropped by
 
 | File                         | Used in                   | Aspect | Source                                                                                  |
 | ---------------------------- | ------------------------- | ------ | --------------------------------------------------------------------------------------- |
-| `hero.jpg`                   | Hero, right panel         | 4:5    | https://www.pexels.com/photo/sunlight-on-concrete-wall-8751643/                         |
-| `feature-main.jpg`           | Image break, main         | 3:2    | https://www.pexels.com/photo/modern-building-facade-12953661/                           |
+| `hero.jpg`                   | Hero, full screen         | 3:2    | https://www.pexels.com/photo/133576/                                                    |
+| `feature-main.jpg`           | Image break, main         | 3:2    | https://www.pexels.com/photo/3559252/                                                   |
 | `feature-detail.jpg`         | Image break, detail       | 3:4    | https://www.pexels.com/photo/a-concrete-wall-5320146/                                   |
-| `philosophy.jpg`             | Dark manifesto section    | 4:5    | https://www.pexels.com/photo/sunlight-on-floor-5015876/                                 |
-| `portfolio-architecture.jpg` | Portfolio grid, Expertise | 4:3    | https://www.pexels.com/photo/black-and-white-photo-of-a-modern-building-9458996/        |
-| `portfolio-interiors.jpg`    | Portfolio grid, Expertise | 3:4    | https://www.pexels.com/photo/a-minimalist-wooden-chair-7303782/                         |
-| `portfolio-bespoke.jpg`      | Portfolio grid, Expertise | 2:1    | https://www.pexels.com/photo/modern-interior-of-lounging-area-5579239/                  |
-| `portfolio-details.jpg`      | Portfolio grid, Expertise | 1:1    | https://www.pexels.com/photo/wooden-bench-on-concrete-wall-13041128/                    |
-| `connection.jpg`             | PortMix relationship      | 4:5    | https://www.pexels.com/photo/brown-concrete-building-under-the-cloudy-sky-9683985/     |
+| `presence.jpg`               | Presence in BiH           | 16:10  | https://www.pexels.com/photo/3581824/                                                   |
+| `expertise-architecture.jpg` | Expertise panel           | 4:5    | https://www.pexels.com/photo/14172040/                                                  |
+| `expertise-interiors.jpg`    | Expertise panel           | 4:5    | https://www.pexels.com/photo/6615806/                                                   |
+| `expertise-bespoke.jpg`      | Expertise panel           | 4:5    | https://www.pexels.com/photo/7483040/                                                   |
+| `expertise-coordination.jpg` | Expertise panel           | 4:5    | https://www.pexels.com/photo/6282080/                                                   |
+| `philosophy.jpg`             | Approach, full-bleed      | 16:10  | https://www.pexels.com/photo/sunlight-on-floor-5015876/                                 |
+| `portfolio-architecture.jpg` | Portfolio grid            | 4:3    | https://www.pexels.com/photo/black-and-white-photo-of-a-modern-building-9458996/        |
+| `portfolio-interiors.jpg`    | Portfolio grid            | 3:4    | https://www.pexels.com/photo/a-minimalist-wooden-chair-7303782/                         |
+| `portfolio-bespoke.jpg`      | Portfolio grid            | 16:10  | https://www.pexels.com/photo/9819644/                                                   |
+| `portfolio-details.jpg`      | Portfolio grid            | 1:1    | https://www.pexels.com/photo/wooden-bench-on-concrete-wall-13041128/                    |
 
 ## Replacing them with the studio's own photography
 

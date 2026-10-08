@@ -5,9 +5,8 @@ import { useEffect, useRef } from "react";
 import { images } from "@/content/images";
 
 /**
- * Hero photograph with a barely-there parallax (12% of scroll) and a slow
- * settle-in on load. Both are skipped for prefers-reduced-motion.
- * The inner frame is taller than its container so the drift never exposes edges.
+ * Full-bleed hero photograph. Settles in from a slight zoom on load and drifts
+ * at a fraction of scroll speed. Both effects are skipped for reduced motion.
  */
 export function HeroImage() {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -21,8 +20,8 @@ export function HeroImage() {
     const update = () => {
       raf = 0;
       const y = window.scrollY;
-      if (y > window.innerHeight * 1.5) return;
-      frame.style.transform = `translate3d(0, ${Math.round(y * 0.12)}px, 0)`;
+      if (y > window.innerHeight * 1.2) return;
+      frame.style.transform = `translate3d(0, ${Math.round(y * 0.18)}px, 0)`;
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -35,8 +34,8 @@ export function HeroImage() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-stone lg:top-[var(--header-h)]">
-      <div ref={frameRef} className="absolute inset-x-0 -top-[8%] h-[116%] will-change-transform">
+    <div className="absolute inset-0 overflow-hidden bg-night">
+      <div ref={frameRef} className="absolute inset-x-0 -top-[6%] h-[112%] will-change-transform">
         <div className="motion-safe:animate-hero-in absolute inset-0">
           <Image
             src={images.hero.src}
@@ -44,11 +43,14 @@ export function HeroImage() {
             fill
             preload
             fetchPriority="high"
-            sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
+            sizes="100vw"
+            className="object-cover object-[62%_50%]"
           />
         </div>
       </div>
+      {/* Legibility scrim: darker at the bottom and left, where the type sits */}
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.6),rgba(0,0,0,0.1)_50%,rgba(0,0,0,0.3))]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.35),rgba(0,0,0,0)_65%)]" />
     </div>
   );
 }

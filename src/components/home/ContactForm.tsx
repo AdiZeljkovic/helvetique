@@ -26,7 +26,7 @@ function validate(values: InquiryPayload): Errors {
   return errors;
 }
 
-/** Colour system per tone, so the form sits on ivory or on near-black. */
+/** Colour system per tone, so the form can sit on a light or a dark ground. */
 const themes: Record<
   Tone,
   {
@@ -45,32 +45,31 @@ const themes: Record<
   light: {
     label: "text-muted",
     labelFocus: "group-focus-within/field:text-ink",
-    field: "text-ink",
-    border: "border-ink/25 hover:border-ink/50",
+    field: "text-ink autofill:shadow-[inset_0_0_0_1000px_#ffffff]",
+    border: "border-ink/20 hover:border-ink/45",
     borderInvalid: "border-accent",
-    button: "bg-ink text-ivory hover:bg-accent",
+    button: "bg-ink text-white hover:bg-accent",
     note: "text-muted",
-    status: "text-charcoal",
+    status: "text-graphite",
     link: "text-ink",
     heading: "text-ink",
   },
   dark: {
-    label: "text-stone",
-    labelFocus: "group-focus-within/field:text-ivory",
-    field:
-      "text-ivory autofill:shadow-[inset_0_0_0_1000px_#171715] autofill:[-webkit-text-fill-color:#f3f0e9]",
-    border: "border-ivory/25 hover:border-ivory/50",
+    label: "text-white/60",
+    labelFocus: "group-focus-within/field:text-white",
+    field: "text-white autofill:shadow-[inset_0_0_0_1000px_#090909] autofill:[-webkit-text-fill-color:#ffffff]",
+    border: "border-white/25 hover:border-white/50",
     borderInvalid: "border-accent",
-    button: "bg-ivory text-ink hover:bg-accent hover:text-ivory",
-    note: "text-stone",
-    status: "text-stone",
-    link: "text-ivory",
-    heading: "text-ivory",
+    button: "bg-white text-ink hover:bg-accent hover:text-white",
+    note: "text-white/60",
+    status: "text-white/70",
+    link: "text-white",
+    heading: "text-white",
   },
 };
 
 const fieldBase =
-  "w-full appearance-none border-0 border-b bg-transparent px-0 py-3 text-base placeholder:text-transparent outline-none transition-colors duration-500 focus:border-accent focus-visible:outline-none";
+  "w-full appearance-none rounded-none border-0 border-b bg-transparent px-0 py-3 text-[1.0625rem] placeholder:text-transparent outline-none transition-colors duration-500 focus:border-ink focus-visible:outline-none";
 
 type FieldProps = {
   formId: string;
@@ -84,7 +83,7 @@ type FieldProps = {
   textarea?: boolean;
 };
 
-/** Underlined, transparent field with an uppercase label. Uncontrolled. */
+/** Underlined, transparent field with a small label above. Uncontrolled. */
 function Field({ formId, tone, name, label, error, type = "text", autoComplete, optional = false, textarea = false }: FieldProps) {
   const t = themes[tone];
   const fieldId = `${formId}-${name}`;
@@ -96,10 +95,10 @@ function Field({ formId, tone, name, label, error, type = "text", autoComplete, 
     <div className="group/field">
       <label
         htmlFor={fieldId}
-        className={cn("label-xs flex items-baseline justify-between transition-colors duration-300", t.label, t.labelFocus)}
+        className={cn("t-small flex items-baseline justify-between transition-colors duration-300", t.label, t.labelFocus)}
       >
         <span>{label}</span>
-        {optional ? <span className="normal-case tracking-normal">{ui.form.optional}</span> : null}
+        {optional ? <span className="text-xs">{ui.form.optional}</span> : null}
       </label>
       {textarea ? (
         <textarea
@@ -186,7 +185,7 @@ export function ContactForm({ tone = "light" }: { tone?: Tone }) {
     return (
       <div role="status" aria-live="polite" className="pt-2">
         <span aria-hidden="true" className="block h-px w-10 bg-accent" />
-        <p className={cn("display-sm mt-6", t.heading)}>{ui.form.successTitle}</p>
+        <p className={cn("t-h3 mt-6", t.heading)}>{ui.form.successTitle}</p>
         <p className={cn("mt-4 max-w-md text-[15px] leading-relaxed", t.note)}>
           {ui.form.successText} {phoneLink}.
         </p>
@@ -217,12 +216,12 @@ export function ContactForm({ tone = "light" }: { tone?: Tone }) {
           type="submit"
           disabled={status === "submitting"}
           className={cn(
-            "group inline-flex h-14 items-center justify-between gap-8 px-7 label transition-colors duration-500 ease-soft disabled:cursor-wait disabled:opacity-60 sm:min-w-[15rem]",
+            "group inline-flex h-13 items-center justify-between gap-8 px-6 text-[0.9375rem] font-medium transition-colors duration-500 disabled:cursor-wait disabled:opacity-60 sm:min-w-[14rem]",
             t.button,
           )}
         >
           <span>{status === "submitting" ? ui.form.sending : contact.submitLabel}</span>
-          <ArrowRight size={14} className="transition-transform duration-500 ease-expo group-hover:translate-x-1" />
+          <ArrowRight size={14} className="transition-transform duration-500 ease-out group-hover:translate-x-1" />
         </button>
         <p className={cn("text-xs leading-relaxed sm:max-w-[16rem] sm:text-right", t.note)}>
           {ui.form.privacyNote}
