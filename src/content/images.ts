@@ -2,20 +2,22 @@
  * Image registry
  * --------------
  * Every photograph used on the site is referenced from here. The current
- * files are stock photographs from Pexels (Pexels License, free for
- * commercial use), fetched and cropped by scripts/fetch-stock-photos.mjs.
+ * files are stock photographs, mostly from Unsplash (Unsplash License, free
+ * for commercial use) and the Sarajevo panorama from Pexels (Pexels License),
+ * fetched and cropped by scripts/fetch-stock-photos.mjs. Sources are listed in
+ * public/images/README.md.
  * To use the studio's own photography, replace the files in /public/images
  * (same names, similar aspect ratios) and update the `alt` text below.
  * Nothing in the components needs to change.
  *
  * Aspect ratios are intentional for the layouts they sit in:
  *   hero               3:2   full-bleed, behind the headline
- *   featureMain        3:2   wide editorial image
- *   featureDetail      3:4   companion detail
+ *   featureMain        3:2   wide editorial image (shown 21:9 / 4:3)
+ *   featureDetail      3:4   companion detail (shown 4:5)
  *   presence           16:10 Sarajevo panorama in the presence section
  *   expertise*         4:5   interactive expertise panel
  *   philosophy         16:10 full-bleed background of the approach section
- *   portfolio*         4:3 / 4:5 / 1:1 / 16:10  asymmetric grid
+ *   portfolio*         4:5   category tiles
  */
 
 export type SiteImage = {
@@ -28,81 +30,81 @@ export type SiteImage = {
 export const images = {
   hero: {
     src: "/images/hero.jpg",
-    alt: "Betonski prolaz u kojem dnevno svjetlo kroz niz otvora iscrtava ritam na zidu od teraca",
-    width: 2400,
-    height: 1600,
+    alt: "Svijetao dnevni boravak s kaminom, visokim prozorima u drvenim okvirima i pogledom na šumu",
+    width: 1920,
+    height: 1280,
   },
   featureMain: {
     src: "/images/feature-main.jpg",
-    alt: "Crno-bijeli detalj arhitekture sa stubovima, prepuštenom pločom i oštrim sjenama",
-    width: 2000,
-    height: 1333,
+    alt: "Ulazni hol s drvenim stepeništem, bijelim ostakljenim vratima i okruglim ogledalom",
+    width: 1920,
+    height: 1280,
   },
   featureDetail: {
     src: "/images/feature-detail.jpg",
-    alt: "Prošarano dnevno svjetlo na zidu od pločica iznad rebrastog betonskog podnožja",
+    alt: "Pogled odozdo na stepenište s hrastovim gazištima, bijelim zidovima i otvorom prema nebu",
     width: 1200,
     height: 1600,
   },
   presence: {
     src: "/images/presence.jpg",
     alt: "Pogled na Sarajevo s brda: krovovi, minaret, gradski tornjevi i planine u izmaglici",
-    width: 2400,
-    height: 1500,
+    width: 1920,
+    height: 1200,
   },
   expertiseArchitecture: {
     src: "/images/expertise-architecture.jpg",
-    alt: "Crno-bijela fasada stambene zgrade s ritmom vertikalnih otvora",
-    width: 1600,
-    height: 2000,
+    alt: "Drvene grede iznad bijelog zida bacaju duge sjene pod plavim nebom",
+    width: 1200,
+    height: 1500,
   },
   expertiseInteriors: {
     src: "/images/expertise-interiors.jpg",
-    alt: "Svijetao enterijer s lučnom nišom, stepenastim kaminom i foteljom",
-    width: 1600,
-    height: 2000,
+    alt: "Svijetao ulazni prostor s bijelim ugradnim ormarom, zidnim stolom i zelenim tabureom",
+    width: 1200,
+    height: 1500,
   },
   expertiseBespoke: {
     src: "/images/expertise-bespoke.jpg",
-    alt: "Drveni element namještaja po mjeri položen na ručne skice i nacrte",
-    width: 1600,
-    height: 2000,
+    alt: "Ugradni ormar bez ručki s osvijetljenom nišom od drvenih letvica i klupom za sjedenje",
+    width: 1200,
+    height: 1500,
   },
   expertiseCoordination: {
     src: "/images/expertise-coordination.jpg",
-    alt: "Radni sto s arhitektonskim nacrtima, naočalama, olovkom i stonom lampom",
-    width: 1600,
-    height: 2000,
+    alt: "Arhitektonski nacrti tlocrta razastrti jedan preko drugog",
+    width: 1200,
+    height: 1500,
   },
   philosophy: {
     src: "/images/philosophy.jpg",
-    alt: "Svjetlo s prozora razliveno po kamenom podu uz betonski stub u tamnoj prostoriji",
-    width: 2400,
-    height: 1500,
+    alt: "Dnevno svjetlo kroz prozore s drvenim okvirima iscrtava pravougaonike na tamnom drvenom podu",
+    width: 1920,
+    height: 1200,
   },
   portfolioArchitecture: {
     src: "/images/portfolio-architecture.jpg",
-    alt: "Siva panelna fasada moderne zgrade s prozorima u tamnim okvirima",
-    width: 1600,
-    height: 1200,
+    alt: "Bijela kolonada s drvenim lamelama uz vodenu površinu pod vedrim nebom",
+    width: 1200,
+    height: 1500,
   },
   portfolioInteriors: {
     src: "/images/portfolio-interiors.jpg",
-    alt: "Hrastovi kuhinjski elementi i stolica od savijene šperploče u svijetlom minimalističkom enterijeru",
+    alt: "Svijetla soba s drvenom komodom, foteljom i parketom u riblju kost",
     width: 1200,
-    height: 1600,
+    height: 1500,
   },
   portfolioBespoke: {
     src: "/images/portfolio-bespoke.jpg",
-    alt: "Dnevno svjetlo pada preko hrastovog poda uz ugradni drveni namještaj",
-    width: 2000,
-    height: 1250,
+    alt: "Ugradne police u obliku luka od svijetlog drveta s keramikom i knjigama",
+    width: 1200,
+    height: 1500,
   },
   portfolioDetails: {
     src: "/images/portfolio-details.jpg",
-    alt: "Drvena klupa od letvica uz betonski zid pod sjenama lišća",
+    alt: "Minimalističko stepenište od bijelog maltera u uskom prolazu",
     width: 1200,
-    height: 1200,
+    height: 1500,
   },
 } as const satisfies Record<string, SiteImage>;
 
