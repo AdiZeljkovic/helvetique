@@ -16,6 +16,22 @@ npm run lint
 npm run build && npm run start
 ```
 
+### With Docker
+
+Dependencies are installed inside the container (Node 22), nothing is needed
+on the host except Docker.
+
+```bash
+docker compose up -d --build   # build the image and start the dev server
+docker compose watch --no-up   # keep running: syncs edits into the container
+```
+
+The site runs on http://localhost:3010 (set `HOST_PORT` to change it). Source
+is synced by Compose Watch rather than bind-mounted, because Windows bind
+mounts deliver no file events and Turbopack would not reload. A change to
+`package.json` or `package-lock.json` rebuilds the image; a change to
+`next.config.ts` restarts the server. Stop with `docker compose down`.
+
 Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to the
 production origin before deploying (it feeds canonical URLs, Open Graph,
 `robots.txt` and `sitemap.xml`).
@@ -26,7 +42,7 @@ production origin before deploying (it feeds canonical URLs, Open Graph,
 | ----------------------------- | -------------------------------------------------------------- |
 | `src/content/site.ts`         | All company facts, navigation and copy. Edit text here.        |
 | `src/content/images.ts`       | Image registry (paths, alt text, dimensions).                  |
-| `public/images/`              | Photography (Pexels stock), see the README inside.             |
+| `public/images/`              | Photography (Unsplash/Pexels stock), see the README inside.    |
 | `src/app/globals.css`         | Design tokens (palette, type, easing), utilities, reveal CSS.  |
 | `src/app/layout.tsx`          | Font (Host Grotesk via `next/font`), metadata.                 |
 | `src/app/page.tsx`            | Section order and JSON-LD structured data.                     |
@@ -34,13 +50,15 @@ production origin before deploying (it feeds canonical URLs, Open Graph,
 | `src/components/home/`        | One component per section.                                     |
 | `src/components/ui/`          | Button, SectionLabel, Reveal, icons.                           |
 | `src/lib/contact.ts`          | Contact form submission boundary (see below).                  |
-| `scripts/fetch-stock-photos.mjs` | Downloads and crops the selected Pexels photographs.        |
+| `scripts/fetch-stock-photos.mjs` | Downloads and crops the selected stock photographs.         |
 | `scripts/generate-placeholders.mjs` | Renders abstract placeholders (no longer used by default). |
 
 ## Photography
 
-The site currently uses stock photographs from Pexels (Pexels License, free for
-commercial use). To use the studio's own photography, drop the files into
+The site currently uses stock photographs, five chosen by the client and the
+rest matched to them: Unsplash (Unsplash License) and one Pexels photograph of
+Sarajevo (Pexels License), both free for commercial use. Unsplash+ photos need
+a paid licence and are not used. To use the studio's own photography, drop the files into
 `public/images/` under the existing names and similar aspect ratios, then update
 the `alt` text in `src/content/images.ts`. Sources, sizes and swap instructions
 are in `public/images/README.md`.
