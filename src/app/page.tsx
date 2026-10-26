@@ -12,22 +12,40 @@ import { siteUrl } from "@/lib/site-url";
 /** Structured data built only from verified company facts. */
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: company.legalName,
-  alternateName: company.shortName,
-  description: seo.description,
-  url: siteUrl,
-  telephone: company.phone.e164,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: company.address.street,
-    addressLocality: company.address.city,
-    addressCountry: company.address.countryCode,
-  },
-  areaServed: { "@type": "Country", name: company.address.country },
-  identifier: { "@type": "PropertyValue", name: "ID broj", value: company.companyId },
-  knowsAbout: [...seo.knowsAbout],
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteUrl}/#organization`,
+      name: company.legalName,
+      alternateName: company.shortName,
+      description: seo.description,
+      url: siteUrl,
+      logo: `${siteUrl}/brand/helvetique-logo.png`,
+      image: `${siteUrl}/opengraph-image`,
+      telephone: company.phone.e164,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: company.address.street,
+        addressLocality: company.address.city,
+        addressCountry: company.address.countryCode,
+      },
+      areaServed: { "@type": "Country", name: company.address.country },
+      identifier: { "@type": "PropertyValue", name: "ID broj", value: company.companyId },
+      knowsAbout: [...seo.knowsAbout],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: company.shortName,
+      inLanguage: seo.lang,
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
 };
+
+// Escape "<" so the payload can never close the script tag (Next.js JSON-LD guidance).
+const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
 
 export default function HomePage() {
   return (
@@ -44,7 +62,7 @@ export default function HomePage() {
       <Footer />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
       />
     </>
   );

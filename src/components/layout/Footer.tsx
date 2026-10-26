@@ -49,7 +49,7 @@ export function Footer() {
         <div className="grid gap-14 py-16 lg:grid-cols-12 lg:gap-x-8 lg:py-20">
           <div className="lg:col-span-4">
             <Link href="#home" aria-label={company.legalName} className="inline-block">
-              <Logo variant="reverse" alt="" className="w-[260px] sm:w-[300px]" />
+              <Logo variant="reverse" alt="" sizes="(min-width: 640px) 300px, 260px" className="w-[260px] sm:w-[300px]" />
             </Link>
           </div>
 

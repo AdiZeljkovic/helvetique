@@ -34,7 +34,9 @@ mounts deliver no file events and Turbopack would not reload. A change to
 
 Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to the
 production origin before deploying (it feeds canonical URLs, Open Graph,
-`robots.txt` and `sitemap.xml`).
+`robots.txt` and `sitemap.xml`). A production build fails without it, so a
+deploy can never publish canonical URLs pointing at localhost. With an
+`https://` origin the site also sends HSTS and upgrades insecure requests.
 
 ## Where things live
 
@@ -44,13 +46,17 @@ production origin before deploying (it feeds canonical URLs, Open Graph,
 | `src/content/images.ts`       | Image registry (paths, alt text, dimensions).                  |
 | `public/images/`              | Photography (Unsplash stock), see the README inside.           |
 | `src/app/globals.css`         | Design tokens (palette, type, easing), utilities, reveal CSS.  |
-| `src/app/layout.tsx`          | Font (Host Grotesk via `next/font`), metadata.                 |
+| `src/app/layout.tsx`          | Font (Host Grotesk via `next/font`), metadata, theme colour.   |
 | `src/app/page.tsx`            | Section order and JSON-LD structured data.                     |
+| `src/app/not-found.tsx`       | 404 page in Bosnian.                                           |
+| `src/app/*icon*`, `manifest.ts` | Tab icon (SVG), favicon, Apple icon, web app manifest.       |
+| `next.config.ts`              | Security headers (CSP and others), image settings.             |
 | `src/components/layout/`      | Header, mobile menu, wordmark, footer.                         |
 | `src/components/home/`        | One component per section.                                     |
 | `src/components/ui/`          | Button, SectionLabel, Reveal, icons.                           |
 | `src/lib/contact.ts`          | Contact form submission boundary (see below).                  |
 | `scripts/fetch-stock-photos.mjs` | Downloads and crops the selected stock photographs.         |
+| `scripts/generate-brand-assets.mjs` | Renders favicon, Apple and manifest icons from `icon.svg`. |
 | `scripts/generate-placeholders.mjs` | Renders abstract placeholders (no longer used by default). |
 
 ## Photography
@@ -70,7 +76,26 @@ visitors the form is not connected and shows the office telephone number.
 
 To connect it, either set `NEXT_PUBLIC_CONTACT_ENDPOINT` to an endpoint that
 accepts a JSON POST of `{ name, email, phone?, subject, message }`, or replace
-`submitInquiry()` with a Server Action or Route Handler that sends email.
+`submitInquiry()` with a Server Action or Route Handler that sends email. The
+endpoint's origin is added to the CSP `connect-src` automatically. A server-side
+handler should validate the payload again and rate-limit submissions; the
+client checks and the honeypot only stop casual spam.
+
+## Security and SEO
+
+- `next.config.ts` sends a Content Security Policy and the usual hardening
+  headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`,
+  `Cross-Origin-Opener-Policy`, `Permissions-Policy`, HSTS over HTTPS). The CSP
+  has no nonces on purpose: nonces would force every request to render
+  dynamically, and this page is prerendered. Inline scripts are therefore
+  allowed; everything else is limited to this origin.
+- Keep `next` and `sharp` current: `npm audit` should report nothing. Both had
+  advisories that affected this site (image optimisation, `next/og`).
+- The page and every metadata route are prerendered (`○` in `next build`).
+  Metadata: title and description, canonical, Open Graph and Twitter card with
+  a generated image, `robots.txt`, `sitemap.xml`, JSON-LD (`ProfessionalService`
+  and `WebSite`), icons and a web app manifest. Unknown URLs get a Bosnian 404
+  with the correct status and `noindex`.
 
 ## Design notes
 
@@ -80,8 +105,9 @@ accepts a JSON POST of `{ name, email, phone?, subject, message }`, or replace
 - Logo: the client's master PNG (`Helvetique-logo-vektorski.png`), cropped to
   the artwork as `public/brand/helvetique-logo.png`, with a reverse version
   (`helvetique-logo-reverse.png`) where only the black letters are white and the
-  red bars are unchanged. Rendered by `src/components/brand/Logo.tsx`, unoptimised
-  for sharpness. Per the brand guidelines: never retype, stretch or recolour it,
+  red bars are unchanged. Rendered by `src/components/brand/Logo.tsx` through
+  `next/image` at its on-screen size, with quality 90 so the thin serifs stay
+  crisp. Per the brand guidelines: never retype, stretch or recolour it,
   keep at least 220 px width on screen and clear space of one ARCHITECTURE cap
   height around it.
 - Palette (from the brand guidelines): Architectural Black `#090909`,

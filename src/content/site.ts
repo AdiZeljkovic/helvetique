@@ -186,6 +186,14 @@ export const contact = {
   },
 } as const;
 
+export const notFound = {
+  title: "Stranica nije pronađena",
+  label: "404",
+  headline: ["Ova stranica", "ne postoji."],
+  text: "Stranica koju tražite ne postoji ili je premještena.",
+  cta: { label: "Nazad na početnu", href: "/" },
+} as const;
+
 export const seo = {
   title: "Helvetique Architecture | Arhitektura i enterijeri",
   description:

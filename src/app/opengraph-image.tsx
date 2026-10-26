@@ -26,7 +26,6 @@ export default async function OpenGraphImage() {
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", position: "relative", fontFamily: "Host Grotesk" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={background} alt="" width={size.width} height={size.height} style={{ position: "absolute", inset: 0 }} />
         <div
           style={{
@@ -47,7 +46,6 @@ export default async function OpenGraphImage() {
             color: "#ffffff",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={logoSrc} alt="" width={280} height={62} />
 
           <div style={{ display: "flex", flexDirection: "column" }}>

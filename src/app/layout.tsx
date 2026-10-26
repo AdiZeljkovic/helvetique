@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Host_Grotesk } from "next/font/google";
 import { seo, company } from "@/content/site";
 import { siteUrl } from "@/lib/site-url";
@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   formatDetection: { telephone: true, email: false, address: false },
+};
+
+export const viewport: Viewport = {
+  // Architectural Black, matching the hero and footer.
+  themeColor: "#090909",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
