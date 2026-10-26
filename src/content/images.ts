@@ -11,8 +11,8 @@
  *
  * Aspect ratios are intentional for the layouts they sit in:
  *   hero               3:2   full-bleed, behind the headline
- *   featureMain        3:2   wide editorial image (shown 21:9 / 4:3)
- *   featureDetail      3:4   companion detail (shown 4:5)
+ *   featureMain        3:2   wide photograph of the studio pair
+ *   featureDetail      3:4   tall photograph of the studio pair
  *   contact            16:10 foot of the dark office panel in the contact section
  *   expertise*         4:5   interactive expertise panel
  *   philosophy         16:10 full-bleed background of the approach section

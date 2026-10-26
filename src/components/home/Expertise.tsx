@@ -3,10 +3,13 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ExpertiseList } from "./ExpertiseList";
 
-/** Expertise: heading on the grid, then the interactive image + list panel. */
+/**
+ * Expertise on Paper White, so it reads apart from the white studio section:
+ * heading on the grid, then the interactive list + image panel.
+ */
 export function Expertise() {
   return (
-    <section id="expertise" aria-labelledby="expertise-heading" className="scroll-mt-[var(--header-h)] bg-paper">
+    <section id="expertise" aria-labelledby="expertise-heading" className="scroll-mt-[var(--header-h)] bg-mist">
       <div className="container-site section-y">
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-x-8">
           <Reveal className="lg:col-span-3">

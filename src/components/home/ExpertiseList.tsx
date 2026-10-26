@@ -11,8 +11,9 @@ import { Button } from "@/components/ui/Button";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Desktop: a sticky photograph on the left that crossfades to the discipline
- * under the pointer (or keyboard focus) in the list on the right.
+ * Desktop: the list on the left and a sticky photograph on the right that
+ * crossfades to the discipline under the pointer (or keyboard focus). Mirrors
+ * the studio section above, where the photographs lead on the left.
  * Mobile: every discipline is shown in full with its own photograph.
  */
 export function ExpertiseList() {
@@ -22,43 +23,8 @@ export function ExpertiseList() {
 
   return (
     <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-8">
-      {/* Sticky image panel, desktop only */}
-      <div className="hidden lg:col-span-5 lg:block">
-        <div className="sticky top-[calc(var(--header-h)+2rem)]">
-          <div className="relative aspect-[4/5] overflow-hidden bg-mist">
-            {items.map((item, index) => {
-              const image = images[item.image];
-              return (
-                <Image
-                  key={item.title}
-                  src={image.src}
-                  alt={index === active ? image.alt : ""}
-                  aria-hidden={index === active ? undefined : true}
-                  fill
-                  sizes="(min-width: 1600px) 600px, 40vw"
-                  className={cn(
-                    "object-cover transition-[opacity,transform] duration-[900ms] ease-out",
-                    index === active
-                      ? "scale-100 opacity-100"
-                      : "scale-[1.03] opacity-0",
-                  )}
-                />
-              );
-            })}
-          </div>
-          <div className="mt-4 flex items-baseline justify-between gap-6">
-            <p className="text-ink" aria-live="polite">
-              {current.title}
-            </p>
-            <p className="t-small tabular-nums text-muted">
-              {pad(active + 1)} / {pad(items.length)}
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* List */}
-      <div className="lg:col-span-6 lg:col-start-7">
+      <div className="lg:col-span-6">
         <ol>
           {items.map((item, index) => {
             const isActive = index === active;
@@ -66,7 +32,7 @@ export function ExpertiseList() {
             return (
               <li
                 key={item.title}
-                className="relative border-t border-line last:border-b"
+                className="relative border-t border-ink/15 last:border-b"
               >
                 {/* Active marker */}
                 <span
@@ -78,7 +44,7 @@ export function ExpertiseList() {
                 />
 
                 {/* Mobile photograph */}
-                <div className="relative mt-6 aspect-[4/3] overflow-hidden bg-mist lg:hidden">
+                <div className="relative mt-6 aspect-[4/3] overflow-hidden bg-line lg:hidden">
                   <Image
                     src={image.src}
                     alt={image.alt}
@@ -145,7 +111,7 @@ export function ExpertiseList() {
                         {item.keywords.map((keyword) => (
                           <li
                             key={keyword}
-                            className="t-small border border-line px-3 py-1 text-graphite"
+                            className="t-small border border-ink/15 bg-white px-3 py-1 text-graphite"
                           >
                             {keyword}
                           </li>
@@ -166,6 +132,41 @@ export function ExpertiseList() {
         >
           {expertise.cta.label}
         </Button>
+      </div>
+
+      {/* Sticky image panel, desktop only */}
+      <div className="hidden lg:col-span-5 lg:col-start-8 lg:block">
+        <div className="sticky top-[calc(var(--header-h)+2rem)]">
+          <div className="relative aspect-[4/5] overflow-hidden bg-line">
+            {items.map((item, index) => {
+              const image = images[item.image];
+              return (
+                <Image
+                  key={item.title}
+                  src={image.src}
+                  alt={index === active ? image.alt : ""}
+                  aria-hidden={index === active ? undefined : true}
+                  fill
+                  sizes="(min-width: 1600px) 600px, 40vw"
+                  className={cn(
+                    "object-cover transition-[opacity,transform] duration-[900ms] ease-out",
+                    index === active
+                      ? "scale-100 opacity-100"
+                      : "scale-[1.03] opacity-0",
+                  )}
+                />
+              );
+            })}
+          </div>
+          <div className="mt-4 flex items-baseline justify-between gap-6">
+            <p className="text-ink" aria-live="polite">
+              {current.title}
+            </p>
+            <p className="t-small tabular-nums text-muted">
+              {pad(active + 1)} / {pad(items.length)}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
