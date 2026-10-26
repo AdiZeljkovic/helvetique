@@ -5,9 +5,8 @@
  * its slot in the layout expects. Output goes to /public/images using the file
  * names referenced by src/content/images.ts.
  *
- * Sources: Unsplash (Unsplash License: free for commercial use, no attribution
- * required) and, for the Sarajevo panorama, Pexels (Pexels License, same terms).
- * Never add Unsplash+ photos (served from plus.unsplash.com): they need a paid
+ * Source: Unsplash (Unsplash License: free for commercial use, no attribution
+ * required). Never add Unsplash+ photos (served from plus.unsplash.com): they need a paid
  * licence.
  *
  * To swap a photo, change its `url` here or replace the JPG in /public/images
@@ -23,7 +22,6 @@ import { join } from "node:path";
 const OUT = join(process.cwd(), "public", "images");
 
 const unsplash = (path) => `https://images.unsplash.com/${path}?fm=jpg&q=92&w=2600`;
-const pexels = (id) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=2600`;
 
 /**
  * file name → source, target size (px) and crop focus.
@@ -45,8 +43,7 @@ const photos = [
   { file: "portfolio-interiors.jpg", page: "https://unsplash.com/photos/aX1TTOuq83M", url: unsplash("photo-1585128792020-803d29415281"), width: 1200, height: 1500, position: "centre" },
   { file: "portfolio-details.jpg", page: "https://unsplash.com/photos/0B7ijYKaKcE", url: unsplash("photo-1601993957728-1e56ab70c5a8"), width: 1200, height: 1500, position: "centre" },
   { file: "portfolio-bespoke.jpg", page: "https://unsplash.com/photos/mFH9FNydifw", url: unsplash("photo-1647481045013-8efc5594369d"), width: 1200, height: 1500, position: "centre" },
-  // Sarajevo panorama
-  { file: "presence.jpg", page: "https://www.pexels.com/photo/3581824/", url: pexels(3581824), width: 1920, height: 1200, position: "centre" },
+  { file: "contact.jpg", page: "https://unsplash.com/photos/KlQXHZHVKWo", url: unsplash("photo-1765801835035-da1179d12c30"), width: 1200, height: 750, position: "centre", top: 0.34 },
 ];
 
 const only = new Set(process.argv.slice(2));

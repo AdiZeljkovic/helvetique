@@ -1,14 +1,11 @@
 # Photography
 
-The photographs in this folder are stock images, fetched and cropped by
-`scripts/fetch-stock-photos.mjs`:
-
-- [Unsplash](https://unsplash.com), under the [Unsplash License](https://unsplash.com/license):
-  free for commercial use, no attribution required, but they must not be sold
-  unaltered or used to build a competing image service. **Unsplash+ photos
-  (served from `plus.unsplash.com`) need a paid licence and are not used.**
-- [Pexels](https://www.pexels.com) for the Sarajevo panorama, under the
-  [Pexels License](https://www.pexels.com/license/) (same terms in practice).
+The photographs in this folder are stock images from [Unsplash](https://unsplash.com),
+fetched and cropped by `scripts/fetch-stock-photos.mjs`. They are published under
+the [Unsplash License](https://unsplash.com/license): free for commercial use, no
+attribution required, but they must not be sold unaltered or used to build a
+competing image service. **Unsplash+ photos (served from `plus.unsplash.com`)
+need a paid licence and are not used.**
 
 Five photographs were selected by the client; the rest were chosen to match them.
 
@@ -26,7 +23,7 @@ Five photographs were selected by the client; the rest were chosen to match them
 | `portfolio-interiors.jpg`    | Portfolio tile            | 4:5    | https://unsplash.com/photos/aX1TTOuq83M   | Studio    |
 | `portfolio-details.jpg`      | Portfolio tile            | 4:5    | https://unsplash.com/photos/0B7ijYKaKcE   | Studio    |
 | `portfolio-bespoke.jpg`      | Portfolio tile            | 4:5    | https://unsplash.com/photos/mFH9FNydifw   | Studio    |
-| `presence.jpg`               | Presence in BiH, contact  | 16:10  | https://www.pexels.com/photo/3581824/     | Studio    |
+| `contact.jpg`                | Contact, office panel     | 16:10  | https://unsplash.com/photos/KlQXHZHVKWo   | Studio    |
 
 ## Replacing them with the studio's own photography
 

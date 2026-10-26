@@ -9,7 +9,7 @@ import { ContactForm } from "./ContactForm";
 /**
  * Contact: heading row, then one framed block split in two.
  * Left: a dark office panel with the phone number, address, map link and a
- * Sarajevo photograph at its foot. Right: the inquiry form on white.
+ * photograph at its foot. Right: the inquiry form on white.
  */
 export function Contact() {
   return (
@@ -60,7 +60,7 @@ export function Contact() {
                       <address className="not-italic">
                         {company.address.street}
                         <br />
-                        {company.address.city}, {company.address.country}
+                        {company.address.city}
                       </address>
                     </dd>
                   </div>
@@ -95,10 +95,10 @@ export function Contact() {
                 </p>
               </div>
 
-              {/* Sarajevo photograph at the foot of the panel */}
+              {/* Photograph at the foot of the panel */}
               <div className="relative mt-auto aspect-[16/9] lg:aspect-auto lg:min-h-[14rem] lg:flex-1">
                 <Image
-                  src={images.presence.src}
+                  src={images.contact.src}
                   alt=""
                   fill
                   sizes="(min-width: 1600px) 600px, (min-width: 1024px) 40vw, 100vw"

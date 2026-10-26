@@ -42,7 +42,7 @@ production origin before deploying (it feeds canonical URLs, Open Graph,
 | ----------------------------- | -------------------------------------------------------------- |
 | `src/content/site.ts`         | All company facts, navigation and copy. Edit text here.        |
 | `src/content/images.ts`       | Image registry (paths, alt text, dimensions).                  |
-| `public/images/`              | Photography (Unsplash/Pexels stock), see the README inside.    |
+| `public/images/`              | Photography (Unsplash stock), see the README inside.           |
 | `src/app/globals.css`         | Design tokens (palette, type, easing), utilities, reveal CSS.  |
 | `src/app/layout.tsx`          | Font (Host Grotesk via `next/font`), metadata.                 |
 | `src/app/page.tsx`            | Section order and JSON-LD structured data.                     |
@@ -55,10 +55,9 @@ production origin before deploying (it feeds canonical URLs, Open Graph,
 
 ## Photography
 
-The site currently uses stock photographs, five chosen by the client and the
-rest matched to them: Unsplash (Unsplash License) and one Pexels photograph of
-Sarajevo (Pexels License), both free for commercial use. Unsplash+ photos need
-a paid licence and are not used. To use the studio's own photography, drop the files into
+The site currently uses stock photographs from Unsplash (Unsplash License, free
+for commercial use), five chosen by the client and the rest matched to them.
+Unsplash+ photos need a paid licence and are not used. To use the studio's own photography, drop the files into
 `public/images/` under the existing names and similar aspect ratios, then update
 the `alt` text in `src/content/images.ts`. Sources, sizes and swap instructions
 are in `public/images/README.md`.

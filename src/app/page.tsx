@@ -2,7 +2,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
 import { StudioIntro } from "@/components/home/StudioIntro";
-import { BosniaPresence } from "@/components/home/BosniaPresence";
 import { Expertise } from "@/components/home/Expertise";
 import { Philosophy } from "@/components/home/Philosophy";
 import { Portfolio } from "@/components/home/Portfolio";
@@ -37,7 +36,6 @@ export default function HomePage() {
       <main id="main" className="flex-1">
         <Hero />
         <StudioIntro />
-        <BosniaPresence />
         <Expertise />
         <Philosophy />
         <Portfolio />

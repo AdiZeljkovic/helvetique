@@ -23,8 +23,6 @@ export const company = {
   },
   companyId: "4203663110007",
   vatNote: "Nije u sistemu PDV-a",
-  /** Koordinate samo za prikaz. */
-  coordinates: "43.8563° N, 18.4131° E",
 } as const;
 
 export const portmix = {
@@ -34,7 +32,6 @@ export const portmix = {
 
 export const navigation = [
   { label: "Studio", href: "#studio" },
-  { label: "Prisustvo u BiH", href: "#presence" },
   { label: "Ekspertiza", href: "#expertise" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Kontakt", href: "#contact" },
@@ -53,7 +50,7 @@ export const ui = {
   viewOn: (category: string, site: string) => `Kategorija ${category} na ${site}`,
   footer: {
     ctaLabel: "Novi projekat",
-    ctaTitle: ["Planirate projekat", "u Bosni i Hercegovini?"],
+    ctaTitle: ["Imate projekat", "na umu?"],
     ctaButton: "Pošaljite upit",
     office: "Ured",
     navigation: "Navigacija",
@@ -80,7 +77,7 @@ export const ui = {
       message: "Poruka treba imati najmanje 20 znakova.",
     },
     successTitle: "Hvala Vam. Upit je uspješno poslan.",
-    successText: "Odgovorit ćemo Vam iz ureda u Sarajevu. Za hitne upite nazovite",
+    successText: "Javit ćemo Vam se uskoro. Za hitne upite nazovite",
     unconfiguredText: "Obrazac trenutno nije povezan s našim sistemom e-pošte. Molimo Vas da nazovete",
     unconfiguredTail: "i rado ćemo Vam pomoći.",
     failedText: "Upit trenutno nije moguće poslati. Pokušajte ponovo ili nazovite",
@@ -89,57 +86,23 @@ export const ui = {
 
 export const hero = {
   headline: ["Prostori oblikovani", "s namjerom"],
-  lede: "Arhitektura, arhitektura enterijera i koordinacija projekata u Bosni i Hercegovini, iz našeg ureda u Sarajevu.",
+  lede: "Arhitektura, arhitektura enterijera, prostori po mjeri i koordinacija projekata, s pažnjom prema kontekstu, materijalu i detalju.",
   primaryCta: { label: "Upoznajte studio", href: "#studio" },
   secondaryCta: { label: "Pogledajte portfolio", href: portmix.url },
 } as const;
 
 export const studio = {
   label: "Studio",
-  headline: ["Lokalno prisutni.", "Međunarodno povezani."],
-  lead: "Iz ureda u Sarajevu obavljamo arhitektonske aktivnosti, razvijamo partnerstva i koordiniramo projekte u Bosni i Hercegovini.",
+  headline: ["Pažljivo osmišljeno.", "Jasno vođeno."],
+  lead: "Bavimo se arhitekturom i enterijerima, razvijamo partnerstva i koordiniramo projekte od prve ideje do realizacije.",
   text: "Radimo promišljeno, komuniciramo jasno i blisko sarađujemo s klijentima i partnerima. Širi portfolio i reference predstavljeni su na PortMix.ch.",
   facts: [
-    { term: "Lokacija", detail: "Sarajevo, Bosna i Hercegovina" },
     { term: "Discipline", detail: "Arhitektura, enterijeri i prostori po mjeri" },
+    { term: "Koordinacija", detail: "Jedna kontakt tačka kroz sve faze projekta" },
     { term: "Portfolio", detail: "PortMix.ch", href: portmix.url },
   ],
   detailCaption: "Svjetlo i materijal",
   wideCaption: "Materijal, svjetlo, proporcija",
-} as const;
-
-export const presence = {
-  label: "Prisustvo u BiH",
-  imageCaption: "Sarajevo, Bosna i Hercegovina",
-  office: {
-    label: "Registrovano sjedište",
-    coordinatesLabel: "Koordinate",
-    phoneLabel: "Telefon",
-    cta: { label: "Kontaktirajte ured", href: "#contact" },
-  },
-  headline: ["Sjedište u Sarajevu.", "Partner na terenu."],
-  intro:
-    "Kao kompanija registrovana u Bosni i Hercegovini, Helvetique architecture d.o.o. Sarajevo je direktna kontakt tačka za klijente, partnere i saradnike kojima je potrebna podrška na licu mjesta.",
-  items: [
-    {
-      title: "Lokalni ured",
-      description:
-        "Registrovano sjedište u Sarajevu za komunikaciju s klijentima i poslovanje u Bosni i Hercegovini.",
-    },
-    {
-      title: "Koordinacija projekata",
-      description: "Usklađivanje klijenata, konsultanata i projektnog tima u svim fazama projekta.",
-    },
-    {
-      title: "Saradnja s partnerima",
-      description: "Saradnja s lokalnim partnerima, stručnjacima i institucijama, u skladu s potrebama projekta.",
-    },
-    {
-      title: "Arhitektonska podrška",
-      description:
-        "Arhitektonska i enterijerska podrška na licu mjesta, oslonjena na širi portfolio predstavljen na PortMix.ch.",
-    },
-  ],
 } as const;
 
 export const expertise = {
@@ -204,17 +167,17 @@ export const portfolio = {
 export const contact = {
   label: "Kontakt",
   headline: ["Razgovarajmo", "o Vašem projektu."],
-  text: "Za upite o projektima, saradnji ili dodatne informacije o našem radu u Bosni i Hercegovini, obratite se uredu u Sarajevu.",
+  text: "Za upite o projektima, saradnji ili dodatne informacije o našem radu, javite nam se telefonom ili putem obrasca.",
   submitLabel: "Pošaljite upit",
   panel: {
-    label: "Ured u Sarajevu",
+    label: "Ured",
     call: "Nazovite",
     map: "Prikaži na karti",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Azize%20%C5%A0a%C4%87irbegovi%C4%87%20bb%2C%20Sarajevo",
   },
   form: {
     title: "Pošaljite upit",
-    text: "Ispunite obrazac i odgovorit ćemo Vam iz ureda u Sarajevu.",
+    text: "Ispunite obrazac i odgovorit ćemo Vam što prije.",
   },
   facts: {
     telephone: "Telefon",
@@ -224,9 +187,9 @@ export const contact = {
 } as const;
 
 export const seo = {
-  title: "Helvetique Architecture Sarajevo | Arhitektura i enterijeri",
+  title: "Helvetique Architecture | Arhitektura i enterijeri",
   description:
-    "Helvetique architecture d.o.o. Sarajevo: arhitektura, arhitektura enterijera, prostori po mjeri i koordinacija projekata u Bosni i Hercegovini. Kompletan portfolio na PortMix.ch.",
+    "Helvetique architecture: arhitektura, arhitektura enterijera, prostori po mjeri i koordinacija projekata. Kompletan portfolio na PortMix.ch.",
   locale: "bs_BA",
   lang: "bs",
   knowsAbout: ["Arhitektura", "Arhitektura enterijera", "Prostori po mjeri", "Koordinacija projekata"],

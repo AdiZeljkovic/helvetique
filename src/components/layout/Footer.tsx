@@ -60,8 +60,6 @@ export function Footer() {
                 {company.address.street}
                 <br />
                 {company.address.city}
-                <br />
-                {company.address.country}
               </address>
               <a href={company.phone.href} className="t-small mt-3 inline-block text-white hover:text-white/70">
                 {company.phone.display}
