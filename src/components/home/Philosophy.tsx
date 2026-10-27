@@ -2,12 +2,14 @@ import Image from "next/image";
 import { philosophy } from "@/content/site";
 import { images } from "@/content/images";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ArrowRight } from "@/components/ui/Icons";
 import { ScrollWords } from "./ScrollWords";
+import { stepIcons } from "@/components/ui/LineIcons";
 
 /**
  * The one dark, cinematic moment on the page. A full-bleed photograph, a large
- * statement whose words light up while scrolling, and four principles at the foot.
+ * statement whose words light up while scrolling, and the four working steps
+ * at the foot, on one glass band read left to right like a process.
  */
 export function Philosophy() {
   return (
@@ -25,17 +27,7 @@ export function Philosophy() {
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(9,9,9,0.9)_0%,rgba(9,9,9,0)_40%)]" />
       </div>
 
-      <div className="container-site relative flex min-h-[100svh] flex-col justify-between gap-24 py-24 lg:py-32">
-        {/* Top row */}
-        <div className="grid gap-6 lg:grid-cols-12 lg:gap-x-8">
-          <Reveal className="lg:col-span-3">
-            <SectionLabel tone="light">{philosophy.label}</SectionLabel>
-          </Reveal>
-          <Reveal delay={80} className="lg:col-span-4 lg:col-start-9 lg:text-right">
-            <p className="t-small text-white/60">{philosophy.aside}</p>
-          </Reveal>
-        </div>
-
+      <div className="container-site relative flex min-h-[100svh] flex-col justify-between gap-14 py-20 sm:gap-20 sm:py-24 lg:py-32">
         {/* Statement */}
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-x-8">
           <h2
@@ -49,24 +41,39 @@ export function Philosophy() {
           </Reveal>
         </div>
 
-        {/* Principles */}
-        <Reveal delay={160}>
-          <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {philosophy.principles.map((principle, index) => (
-              <li key={principle.title} className="group relative border-t border-white/20 pt-6">
+        {/* Steps: cells divided by hairlines, one row of four on desktop, two by two on tablets */}
+        <ol className="grid border border-white/15 bg-white/[0.04] backdrop-blur-md sm:grid-cols-2 lg:grid-cols-4">
+          {philosophy.steps.map((step, index) => {
+            const Icon = stepIcons[step.icon];
+            return (
+              <Reveal
+                as="li"
+                key={step.title}
+                delay={index * 100}
+                className="group relative flex gap-5 border-white/15 p-5 transition-colors duration-700 hover:bg-white/[0.05] max-sm:not-first:border-t sm:flex-col sm:gap-0 sm:p-8 sm:max-lg:even:border-l sm:max-lg:nth-[n+3]:border-t lg:not-first:border-l xl:p-10"
+              >
                 <span
                   aria-hidden="true"
-                  className="absolute -top-px left-0 h-px w-0 bg-accent transition-[width] duration-700 ease-out group-hover:w-full"
+                  className="absolute inset-x-0 -top-px h-px origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out group-hover:scale-x-100"
                 />
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-[1.375rem] tracking-[-0.02em] text-white">{principle.title}</h3>
-                  <span className="t-small tabular-nums text-white/40">{String(index + 1).padStart(2, "0")}</span>
+                {/* Phones: icon beside the text; larger screens: icon above it */}
+                <div className="flex shrink-0 items-start justify-between gap-4">
+                  <Icon className="h-12 w-12 text-white/75 transition-colors duration-700 group-hover:text-white sm:h-14 sm:w-14 lg:h-[4.5rem] lg:w-[4.5rem]" />
+                  {index < philosophy.steps.length - 1 && (
+                    <ArrowRight
+                      size={18}
+                      className="mt-1 hidden text-white/35 transition-[transform,color] duration-500 ease-out group-hover:translate-x-1 group-hover:text-accent lg:block"
+                    />
+                  )}
                 </div>
-                <p className="t-small mt-3 max-w-[18rem] text-white/60">{principle.text}</p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+                <div className="sm:mt-10 lg:mt-14">
+                  <h3 className="t-h3 text-white">{step.title}</h3>
+                  <p className="t-small mt-2 max-w-[18rem] text-white/65 sm:mt-3">{step.text}</p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

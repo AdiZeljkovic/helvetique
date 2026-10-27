@@ -4,7 +4,7 @@ import { join } from "node:path";
 import sharp from "sharp";
 import { company, hero, seo } from "@/content/site";
 
-export const alt = `${company.legalName} — arhitektura i enterijeri`;
+export const alt = `${company.legalName} — ${seo.ogAlt}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

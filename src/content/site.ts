@@ -4,7 +4,8 @@
  * članove tima, statistike ili nazive projekata koji nisu potvrđeni.
  *
  * Ton: formalan i sažet, obraćanje s "Vi" (veliko slovo), ijekavica.
- * Fotografije na stranici su stock, pa ih tekst ne predstavlja kao vlastite radove.
+ * Fotografije su većinom stock (osim dvije iz projekata klijenta: vrata i detalji),
+ * pa ih tekst ne predstavlja kao vlastite radove.
  */
 
 export const company = {
@@ -23,6 +24,11 @@ export const company = {
   },
   companyId: "4203663110007",
   vatNote: "Nije u sistemu PDV-a",
+  /** Tržišta na kojima studio radi. */
+  markets: [
+    { name: "Bosna i Hercegovina", code: "BA" },
+    { name: "Švicarska", code: "CH" },
+  ],
 } as const;
 
 export const portmix = {
@@ -50,8 +56,11 @@ export const ui = {
   viewOn: (category: string, site: string) => `Kategorija ${category} na ${site}`,
   footer: {
     ctaLabel: "Novi projekat",
-    ctaTitle: ["Imate projekat", "na umu?"],
+    /** The closing question mark is added in red by the footer. */
+    ctaTitle: ["Imate projekat", "na umu"],
     ctaButton: "Pošaljite upit",
+    orCall: "Ili nazovite",
+    tagline: "Enterijeri, vrata i namještaj po mjeri, razrađeni do posljednjeg detalja.",
     office: "Ured",
     navigation: "Navigacija",
     portfolio: "Portfolio",
@@ -63,7 +72,7 @@ export const ui = {
     name: "Ime i prezime",
     email: "E-mail",
     phone: "Telefon",
-    subject: "Predmet",
+    subject: "Šta Vas zanima?",
     message: "Poruka",
     optional: "Opcionalno",
     sending: "Slanje…",
@@ -73,7 +82,7 @@ export const ui = {
       name: "Unesite ime i prezime.",
       email: "Unesite ispravnu e-mail adresu.",
       phone: "Provjerite broj telefona.",
-      subject: "Unesite predmet upita.",
+      subject: "Odaberite temu upita.",
       message: "Poruka treba imati najmanje 20 znakova.",
     },
     successTitle: "Hvala Vam. Upit je uspješno poslan.",
@@ -86,98 +95,98 @@ export const ui = {
 
 export const hero = {
   headline: ["Prostori oblikovani", "s namjerom"],
-  lede: "Arhitektura, arhitektura enterijera, prostori po mjeri i koordinacija projekata, s pažnjom prema kontekstu, materijalu i detalju.",
+  lede: "Oblikujemo enterijere i kreiramo prostore po Vašoj mjeri, od prve ideje do realizacije, uz pažljivu koordinaciju i dugoročna partnerstva.",
   primaryCta: { label: "Upoznajte studio", href: "#studio" },
   secondaryCta: { label: "Pogledajte portfolio", href: portmix.url },
 } as const;
 
 export const studio = {
-  label: "Studio",
-  headline: ["Pažljivo osmišljeno.", "Jasno vođeno."],
-  lead: "Bavimo se arhitekturom i enterijerima, razvijamo partnerstva i koordiniramo projekte od prve ideje do realizacije.",
-  text: "Radimo promišljeno, komuniciramo jasno i blisko sarađujemo s klijentima i partnerima. Širi portfolio i reference predstavljeni su na PortMix.ch.",
+  headline: ["Partner za enterijer", "i detalj."],
+  lead: "Helvetique architecture je studio za dizajn enterijera, vrata i namještaj po mjeri, sa sjedištem u Sarajevu. Svaki projekat razrađujemo do tehničke i radioničke dokumentacije za proizvođače.",
+  text: "Ne projektujemo objekte: s arhitektima i izvođačima sarađujemo kao partner za enterijer i detalj. Širi portfolio i reference predstavljeni su na PortMix.ch.",
   facts: [
-    { term: "Discipline", detail: "Arhitektura, enterijeri i prostori po mjeri" },
-    { term: "Koordinacija", detail: "Jedna kontakt tačka kroz sve faze projekta" },
+    { term: "Za koga", detail: "Privatni klijenti, investitori, arhitekti i proizvođači" },
+    { term: "Gdje radimo", detail: company.markets.map((market) => market.name).join(" i ") },
     { term: "Portfolio", detail: "PortMix.ch", href: portmix.url },
   ],
-  detailCaption: "Svjetlo i materijal",
-  wideCaption: "Materijal, svjetlo, proporcija",
+  detailCaption: "Stepenište s drvenim gazištima",
+  wideCaption: "Ulaz: vrata, stolarija i stepenište",
 } as const;
 
 export const expertise = {
-  label: "Ekspertiza",
   headline: ["Od koncepta", "do detalja."],
-  intro: "Četiri discipline, jedan pristup: jasna ideja, pažljivo razrađena u svakoj fazi projekta.",
+  intro: "Četiri discipline, jedan pristup: jasna ideja, razrađena do tehničke i radioničke dokumentacije za proizvođače.",
+  scopeLabel: "Šta radimo",
   cta: { label: "Pogledajte portfolio na PortMix.ch", href: portmix.url },
   items: [
     {
-      title: "Arhitektura",
-      description: "Prostorni koncepti i arhitektonsko planiranje, oblikovani prema kontekstu, namjeni i mjestu.",
-      keywords: ["Koncept", "Planiranje", "Kontekst"],
-      image: "expertiseArchitecture",
+      title: "Dizajn enterijera",
+      description: "Enterijeri osmišljeni kao cjelina, od rasporeda i atmosfere do posljednjeg detalja.",
+      scope: ["Raspored prostora", "3D prikazi", "Izbor materijala i rasvjete", "Nacrti ugradnog namještaja"],
+      image: "expertiseInteriors",
+      icon: "interiors",
     },
     {
-      title: "Arhitektura enterijera",
-      description: "Enterijeri u kojima materijal, proporcija, funkcija i atmosfera čine jednu cjelinu.",
-      keywords: ["Materijal", "Proporcija", "Atmosfera"],
-      image: "expertiseInteriors",
+      title: "Vrata po mjeri",
+      description: "Unutrašnja vrata i stolarija, usklađeni s enterijerom i razrađeni za proizvođača.",
+      scope: ["Detalji vrata", "Liste vrata", "Tehnička dokumentacija", "Usklađivanje s proizvođačima"],
+      image: "expertiseDoors",
+      icon: "doors",
     },
     {
       title: "Prostori po mjeri",
-      description: "Individualna rješenja razvijena za konkretan prostor, njegove zahtjeve i identitet.",
-      keywords: ["Detalj", "Namjena", "Identitet"],
+      description: "Pločasti namještaj, ugradbeni ormari i police, osmišljeni za konkretan prostor i način na koji se koristi.",
+      scope: ["Ugradbeni ormari", "Police", "Pločasti namještaj", "Radionički nacrti"],
       image: "expertiseBespoke",
+      icon: "bespoke",
     },
     {
-      title: "Koordinacija projekata",
-      description: "Jedna kontakt tačka za komunikaciju, usklađivanje i podršku kroz sve faze projekta.",
-      keywords: ["Komunikacija", "Usklađivanje", "Podrška"],
-      image: "expertiseCoordination",
+      title: "Detalji",
+      description: "Klupice, opšavi oko stolarije i slični elementi od drveta koji enterijeru daju završen izgled.",
+      scope: ["Klupice", "Opšavi oko stolarije", "Elementi od drveta", "Detaljni nacrti"],
+      image: "expertiseDetails",
+      icon: "details",
     },
   ],
 } as const;
 
 export const philosophy = {
-  label: "Pristup",
-  aside: "Proporcija, materijal, funkcija i kontekst",
-  statement: "Arhitektura počinje osjećajem koji prostor treba da pruži.",
-  text: "Svakom prostoru pristupamo kroz proporciju, materijal, funkciju i kontekst, kako bi rezultat bio promišljen, a ne dekorativan.",
-  principles: [
-    { title: "Proporcija", text: "Mjera i odnos elemenata koji prostoru daju smirenost." },
-    { title: "Materijal", text: "Materijali birani zbog teksture, svjetla i trajnosti." },
-    { title: "Funkcija", text: "Prostor oblikovan prema načinu na koji se zaista koristi." },
-    { title: "Kontekst", text: "Odnos prema mjestu, svjetlu i neposrednom okruženju." },
+  statement: "Enterijer počinje osjećajem koji prostor treba da pruži.",
+  text: "Svaki projekat vodimo kroz četiri koraka, od prvog koncepta do koordinacije s proizvođačima i izvođačima.",
+  steps: [
+    { title: "Koncept", text: "Raspored prostora, atmosfera i 3D prikazi.", icon: "concept" },
+    { title: "Razrada", text: "Materijali, rasvjeta, vrata i detalji, usklađeni u jednu cjelinu.", icon: "development" },
+    { title: "Dokumentacija", text: "Tehnički i radionički nacrti za proizvođače.", icon: "documentation" },
+    { title: "Koordinacija", text: "Usklađivanje s arhitektima, izvođačima i proizvođačima.", icon: "coordination" },
   ],
 } as const;
 
 export const portfolio = {
-  label: "Portfolio",
   headline: ["Odabrane perspektive."],
   text: "Projekti, reference i kompletan portfolio predstavljeni su na PortMix.ch.",
   categories: [
-    { title: "Arhitektura", image: "portfolioArchitecture" },
-    { title: "Enterijeri", image: "portfolioInteriors" },
-    { title: "Detalji", image: "portfolioDetails" },
-    { title: "Prostori po mjeri", image: "portfolioBespoke" },
+    { title: "Enterijeri", image: "portfolioInteriors", icon: "interiors" },
+    { title: "Vrata", image: "portfolioDoors", icon: "doors" },
+    { title: "Prostori po mjeri", image: "portfolioBespoke", icon: "bespoke" },
+    { title: "Detalji", image: "portfolioDetails", icon: "details" },
   ],
+  tileCta: "Pogledajte na PortMix.ch",
   cta: { label: "Pogledajte kompletan portfolio", href: portmix.url },
 } as const;
 
 export const contact = {
-  label: "Kontakt",
   headline: ["Razgovarajmo", "o Vašem projektu."],
   text: "Za upite o projektima, saradnji ili dodatne informacije o našem radu, javite nam se telefonom ili putem obrasca.",
   submitLabel: "Pošaljite upit",
-  panel: {
-    label: "Ured",
-    call: "Nazovite",
-    map: "Prikaži na karti",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Azize%20%C5%A0a%C4%87irbegovi%C4%87%20bb%2C%20Sarajevo",
+  map: {
+    label: "Prikaži na karti",
+    url: "https://www.google.com/maps/search/?api=1&query=Azize%20%C5%A0a%C4%87irbegovi%C4%87%20bb%2C%20Sarajevo",
   },
   form: {
     title: "Pošaljite upit",
-    text: "Ispunite obrazac i odgovorit ćemo Vam što prije.",
+    text: "Odaberite temu, ispunite obrazac i odgovorit ćemo Vam što prije.",
+    /** Topics offered as chips; the choice is sent as the inquiry's subject. */
+    topics: [...expertise.items.map((item) => item.title), "Saradnja", "Drugo"],
   },
   facts: {
     telephone: "Telefon",
@@ -195,12 +204,19 @@ export const notFound = {
 } as const;
 
 export const seo = {
-  title: "Helvetique Architecture | Arhitektura i enterijeri",
+  title: "Helvetique Architecture | Dizajn enterijera, vrata i namještaj po mjeri",
   description:
-    "Helvetique architecture: arhitektura, arhitektura enterijera, prostori po mjeri i koordinacija projekata. Kompletan portfolio na PortMix.ch.",
+    "Helvetique architecture: dizajn enterijera, vrata i namještaj po mjeri, detalji u drvetu te tehnička i radionička dokumentacija za proizvođače. Portfolio na PortMix.ch.",
+  ogAlt: "dizajn enterijera, vrata i namještaj po mjeri",
   locale: "bs_BA",
   lang: "bs",
-  knowsAbout: ["Arhitektura", "Arhitektura enterijera", "Prostori po mjeri", "Koordinacija projekata"],
-  ogFooter: "Arhitektura · Enterijeri · Prostori po mjeri",
+  knowsAbout: [
+    "Dizajn enterijera",
+    "Vrata po mjeri",
+    "Namještaj po mjeri",
+    "Ugradbeni ormari",
+    "Tehnička i radionička dokumentacija",
+  ],
+  ogFooter: "Enterijeri · Vrata · Namještaj po mjeri",
   ogPortfolio: "Portfolio na PortMix.ch",
 } as const;

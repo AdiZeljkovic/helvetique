@@ -1,10 +1,11 @@
 /**
  * Image registry
  * --------------
- * Every photograph used on the site is referenced from here. The current
- * files are stock photographs from Unsplash (Unsplash License, free for
- * commercial use), fetched and cropped by scripts/fetch-stock-photos.mjs.
- * Sources are listed in public/images/README.md.
+ * Every photograph used on the site is referenced from here. Two are the
+ * client's own project photographs (expertise doors and details); the rest
+ * are stock photographs from Unsplash (Unsplash License, free for commercial
+ * use). All are cropped by scripts/fetch-stock-photos.mjs; sources are listed
+ * in public/images/README.md.
  * To use the studio's own photography, replace the files in /public/images
  * (same names, similar aspect ratios) and update the `alt` text below.
  * Nothing in the components needs to change.
@@ -13,10 +14,10 @@
  *   hero               3:2   full-bleed, behind the headline
  *   featureMain        3:2   wide photograph of the studio pair
  *   featureDetail      3:4   tall photograph of the studio pair
- *   contact            16:10 foot of the dark office panel in the contact section
  *   expertise*         4:5   interactive expertise panel
  *   philosophy         16:10 full-bleed background of the approach section
- *   portfolio*         4:5   category tiles
+ *   portfolio*         4:5   category panels (opened panels are wider, so
+ *                            `position` keeps the subject in frame)
  */
 
 export type SiteImage = {
@@ -24,6 +25,8 @@ export type SiteImage = {
   alt: string;
   width: number;
   height: number;
+  /** CSS object-position for frames much wider than the photograph (default: centre). */
+  position?: string;
 };
 
 export const images = {
@@ -45,21 +48,15 @@ export const images = {
     width: 1200,
     height: 1600,
   },
-  contact: {
-    src: "/images/contact.jpg",
-    alt: "Toplo dnevno svjetlo pada na zid od grubog maltera",
-    width: 1200,
-    height: 750,
-  },
-  expertiseArchitecture: {
-    src: "/images/expertise-architecture.jpg",
-    alt: "Drvene grede iznad bijelog zida bacaju duge sjene pod plavim nebom",
+  expertiseInteriors: {
+    src: "/images/expertise-interiors.jpg",
+    alt: "Spavaća soba sa zidovima obloženim drvetom i ugradnim drvenim volumenom uz hodnik",
     width: 1200,
     height: 1500,
   },
-  expertiseInteriors: {
-    src: "/images/expertise-interiors.jpg",
-    alt: "Svijetao ulazni prostor s bijelim ugradnim ormarom, zidnim stolom i zelenim tabureom",
+  expertiseDoors: {
+    src: "/images/expertise-doors.jpg",
+    alt: "Hrastova vrata s osvijetljenim dovratnikom uz betonsko stepenište",
     width: 1200,
     height: 1500,
   },
@@ -69,9 +66,9 @@ export const images = {
     width: 1200,
     height: 1500,
   },
-  expertiseCoordination: {
-    src: "/images/expertise-coordination.jpg",
-    alt: "Arhitektonski nacrti tlocrta razastrti jedan preko drugog",
+  expertiseDetails: {
+    src: "/images/expertise-details.jpg",
+    alt: "Hrastovi opšavi oko visokih prozora u dugom hodniku s betonskim zidovima",
     width: 1200,
     height: 1500,
   },
@@ -81,15 +78,16 @@ export const images = {
     width: 1920,
     height: 1200,
   },
-  portfolioArchitecture: {
-    src: "/images/portfolio-architecture.jpg",
-    alt: "Bijela kolonada s drvenim lamelama uz vodenu površinu pod vedrim nebom",
-    width: 1200,
-    height: 1500,
-  },
   portfolioInteriors: {
     src: "/images/portfolio-interiors.jpg",
-    alt: "Svijetla soba s drvenom komodom, foteljom i parketom u riblju kost",
+    alt: "Sjene prozorskih okvira na zidu iznad svijetle sofe i okruglog drvenog stola",
+    width: 1200,
+    height: 1500,
+    position: "50% 90%",
+  },
+  portfolioDoors: {
+    src: "/images/portfolio-doors.jpg",
+    alt: "Bijela dvokrilna vrata s profilisanim panelima iznad parketa u riblju kost",
     width: 1200,
     height: 1500,
   },
@@ -101,7 +99,7 @@ export const images = {
   },
   portfolioDetails: {
     src: "/images/portfolio-details.jpg",
-    alt: "Minimalističko stepenište od bijelog maltera u uskom prolazu",
+    alt: "Zakrivljena klupa od drvenih letvica, detalj iz blizine",
     width: 1200,
     height: 1500,
   },

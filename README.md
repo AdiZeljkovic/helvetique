@@ -1,8 +1,10 @@
 # Helvetique architecture d.o.o. Sarajevo
 
-Official website of Helvetique architecture d.o.o. Sarajevo: the local
-architectural presence in Bosnia and Herzegovina, connected to the broader
-portfolio on [PortMix.ch](https://portmix.ch). All public copy is in Bosnian
+Official website of Helvetique architecture d.o.o. Sarajevo, a studio for
+interior design, custom doors, built-in furniture and wooden details, with
+technical and workshop drawings for manufacturers in Bosnia and Herzegovina
+and Switzerland. It does not design buildings; the copy must not suggest it.
+The broader portfolio is on [PortMix.ch](https://portmix.ch). All public copy is in Bosnian
 and lives in `src/content/site.ts` (content) and its `ui` object (microcopy).
 
 One-page site built with Next.js (App Router), TypeScript and Tailwind CSS v4.
@@ -100,8 +102,9 @@ client checks and the honeypot only stop casual spam.
 ## Design notes
 
 - Direction: contemporary Swiss minimalism. White ground, one grotesk
-  typeface, large photography, a 12-column grid with section names in the
-  left three columns and content on the right.
+  typeface, large photography, a 12-column grid. Sections open straight with
+  a large headline from the left edge and the supporting text in the last four
+  columns; there are no small section labels.
 - Logo: the client's master PNG (`Helvetique-logo-vektorski.png`), cropped to
   the artwork as `public/brand/helvetique-logo.png`, with a reverse version
   (`helvetique-logo-reverse.png`) where only the black letters are white and the

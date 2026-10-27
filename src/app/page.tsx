@@ -29,7 +29,7 @@ const structuredData = {
         addressLocality: company.address.city,
         addressCountry: company.address.countryCode,
       },
-      areaServed: { "@type": "Country", name: company.address.country },
+      areaServed: company.markets.map((market) => ({ "@type": "Country", name: market.name })),
       identifier: { "@type": "PropertyValue", name: "ID broj", value: company.companyId },
       knowsAbout: [...seo.knowsAbout],
     },

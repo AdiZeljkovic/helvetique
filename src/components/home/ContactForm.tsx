@@ -14,14 +14,15 @@ type Tone = "light" | "dark";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/** Errors are added in the order the fields appear, so focus goes to the first one on screen. */
 function validate(values: InquiryPayload): Errors {
   const errors: Errors = {};
+  if (values.subject.trim().length < 2) errors.subject = ui.form.errors.subject;
   if (values.name.trim().length < 2) errors.name = ui.form.errors.name;
   if (!EMAIL_PATTERN.test(values.email.trim())) errors.email = ui.form.errors.email;
   if (values.phone && values.phone.replace(/[\s()+\-./]/g, "").length < 6) {
     errors.phone = ui.form.errors.phone;
   }
-  if (values.subject.trim().length < 2) errors.subject = ui.form.errors.subject;
   if (values.message.trim().length < 20) errors.message = ui.form.errors.message;
   return errors;
 }
@@ -35,6 +36,9 @@ const themes: Record<
     field: string;
     border: string;
     borderInvalid: string;
+    chip: string;
+    chipBorder: string;
+    chipChecked: string;
     button: string;
     note: string;
     status: string;
@@ -48,6 +52,9 @@ const themes: Record<
     field: "text-ink autofill:shadow-[inset_0_0_0_1000px_#ffffff]",
     border: "border-ink/20 hover:border-ink/45",
     borderInvalid: "border-accent",
+    chip: "text-graphite hover:border-ink/50",
+    chipBorder: "border-ink/20",
+    chipChecked: "peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white",
     button: "bg-ink text-white hover:bg-accent",
     note: "text-muted",
     status: "text-graphite",
@@ -60,6 +67,9 @@ const themes: Record<
     field: "text-white autofill:shadow-[inset_0_0_0_1000px_#090909] autofill:[-webkit-text-fill-color:#ffffff]",
     border: "border-white/25 hover:border-white/50",
     borderInvalid: "border-accent",
+    chip: "text-white/80 hover:border-white/60",
+    chipBorder: "border-white/25",
+    chipChecked: "peer-checked:border-white peer-checked:bg-white peer-checked:text-ink",
     button: "bg-white text-ink hover:bg-accent hover:text-white",
     note: "text-white/60",
     status: "text-white/70",
@@ -133,6 +143,59 @@ function Field({ formId, tone, name, label, error, type = "text", autoComplete, 
   );
 }
 
+type TopicFieldProps = {
+  formId: string;
+  tone: Tone;
+  label: string;
+  topics: readonly string[];
+  error?: string;
+};
+
+/**
+ * Single choice shown as chips. Each chip is a native radio button, visually
+ * hidden, so arrow keys, form reset and FormData work as usual.
+ */
+function TopicField({ formId, tone, label, topics, error }: TopicFieldProps) {
+  const t = themes[tone];
+  const errorId = `${formId}-subject-error`;
+  const invalid = Boolean(error);
+
+  return (
+    <fieldset>
+      <legend className={cn("t-small", t.label)}>{label}</legend>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {topics.map((topic) => (
+          <label key={topic} className="cursor-pointer">
+            <input
+              type="radio"
+              name="subject"
+              value={topic}
+              required
+              aria-describedby={invalid ? errorId : undefined}
+              className="peer sr-only"
+            />
+            <span
+              className={cn(
+                "inline-flex h-10 items-center border px-4 text-[0.9375rem] tracking-[-0.01em] transition-colors duration-300 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent",
+                t.chip,
+                invalid ? t.borderInvalid : t.chipBorder,
+                t.chipChecked,
+              )}
+            >
+              {topic}
+            </span>
+          </label>
+        ))}
+      </div>
+      {invalid ? (
+        <p id={errorId} className="mt-2 text-xs text-accent">
+          {error}
+        </p>
+      ) : null}
+    </fieldset>
+  );
+}
+
 export function ContactForm({ tone = "light" }: { tone?: Tone }) {
   const t = themes[tone];
   const formId = useId();
@@ -203,11 +266,14 @@ export function ContactForm({ tone = "light" }: { tone?: Tone }) {
         </label>
       </div>
 
+      <TopicField formId={formId} tone={tone} label={ui.form.subject} topics={contact.form.topics} error={errors.subject} />
+
       <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-8">
-        <Field formId={formId} tone={tone} name="name" label={ui.form.name} autoComplete="name" error={errors.name} />
+        <div className="sm:col-span-2">
+          <Field formId={formId} tone={tone} name="name" label={ui.form.name} autoComplete="name" error={errors.name} />
+        </div>
         <Field formId={formId} tone={tone} name="email" label={ui.form.email} type="email" autoComplete="email" error={errors.email} />
         <Field formId={formId} tone={tone} name="phone" label={ui.form.phone} type="tel" autoComplete="tel" optional error={errors.phone} />
-        <Field formId={formId} tone={tone} name="subject" label={ui.form.subject} error={errors.subject} />
       </div>
       <Field formId={formId} tone={tone} name="message" label={ui.form.message} textarea error={errors.message} />
 
