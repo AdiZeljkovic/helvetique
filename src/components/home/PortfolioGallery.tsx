@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { portfolio, portmix, ui } from "@/content/site";
+import { portfolio } from "@/content/site";
 import { images } from "@/content/images";
 import { cn } from "@/lib/cn";
-import { ArrowUpRight } from "@/components/ui/Icons";
 import { disciplineIcons } from "@/components/ui/LineIcons";
 
 /** Pointer has to rest on a panel this long before it opens, so sweeping across the row does not flicker. */
@@ -13,10 +12,11 @@ const HOVER_INTENT_MS = 90;
 
 /**
  * Large screens: the four categories as one row of tall panels. The panel
- * under the pointer (or keyboard focus) widens to show its photograph and its
- * link while the others narrow and dim; the last one opened stays open.
+ * under the pointer widens to show its photograph while the others narrow and
+ * dim; the last one opened stays open.
  * Smaller screens: a grid of tiles, four across on tablets, two on phones.
- * Every panel leads to PortMix.ch.
+ * The panels are photographs, not links: the one way out to PortMix.ch is the
+ * link band below, so visitors are not sent away from every picture.
  */
 export function PortfolioGallery() {
   // `changed` keeps icons from redrawing on first render; they draw in with the reveal instead.
@@ -49,13 +49,9 @@ export function PortfolioGallery() {
               isActive ? "xl:grow-[2.6]" : "xl:grow",
             )}
           >
-            <a
-              href={portmix.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <figure
               onMouseEnter={() => selectOnHover(index)}
               onMouseLeave={() => window.clearTimeout(hoverTimer.current)}
-              onFocus={() => select(index)}
               className="group absolute inset-0 overflow-hidden bg-mist"
             >
               <Image
@@ -79,33 +75,13 @@ export function PortfolioGallery() {
                 )}
               />
 
-              <div aria-hidden="true" className="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5 xl:p-7">
+              <figcaption className="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5 xl:p-7">
                 <Icon data-redraw={isActive && changed} className="h-8 w-8 sm:h-10 sm:w-10 xl:h-12 xl:w-12" />
-                <div className="mt-3 flex items-end justify-between gap-3 xl:mt-5">
-                  <span className="text-lg leading-tight tracking-[-0.02em] sm:text-xl xl:text-2xl">
-                    {category.title}
-                  </span>
-                  <ArrowUpRight
-                    size={16}
-                    className="mb-1 shrink-0 transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </div>
-                {/* Link line, opened with the panel */}
-                <div
-                  className={cn(
-                    "hidden transition-[grid-template-rows,opacity] duration-700 ease-out xl:grid",
-                    isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-                  )}
-                >
-                  <div className="overflow-hidden">
-                    <p className="t-small mt-2 whitespace-nowrap text-white/75">{portfolio.tileCta}</p>
-                  </div>
-                </div>
-              </div>
-              <span className="sr-only">
-                {ui.viewOn(category.title, portmix.name)} {ui.opensInNewTab}
-              </span>
-            </a>
+                <span className="mt-3 block text-lg leading-tight tracking-[-0.02em] sm:text-xl xl:mt-5 xl:text-2xl">
+                  {category.title}
+                </span>
+              </figcaption>
+            </figure>
           </li>
         );
       })}

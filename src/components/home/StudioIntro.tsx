@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { studio, ui } from "@/content/site";
+import { studio } from "@/content/site";
 import { images } from "@/content/images";
 import { Reveal } from "@/components/ui/Reveal";
-import { ArrowUpRight } from "@/components/ui/Icons";
 
 /**
  * Studio introduction, composed as one piece:
@@ -76,25 +75,7 @@ export function StudioIntro() {
               {studio.facts.map((fact) => (
                 <div key={fact.term} className="border-t border-line py-5 sm:pb-0">
                   <dt className="t-small text-muted">{fact.term}</dt>
-                  <dd className="mt-2 text-[1.0625rem] leading-snug tracking-[-0.01em] text-ink">
-                    {"href" in fact ? (
-                      <a
-                        href={fact.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2"
-                      >
-                        <span className="link-underline group-hover:link-underline-active">{fact.detail}</span>
-                        <ArrowUpRight
-                          size={13}
-                          className="text-accent transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                        />
-                        <span className="sr-only">{ui.opensInNewTab}</span>
-                      </a>
-                    ) : (
-                      fact.detail
-                    )}
-                  </dd>
+                  <dd className="mt-2 text-[1.0625rem] leading-snug tracking-[-0.01em] text-ink">{fact.detail}</dd>
                 </div>
               ))}
             </dl>

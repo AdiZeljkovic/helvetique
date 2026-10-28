@@ -2,7 +2,6 @@ import Image from "next/image";
 import { philosophy } from "@/content/site";
 import { images } from "@/content/images";
 import { Reveal } from "@/components/ui/Reveal";
-import { ArrowRight } from "@/components/ui/Icons";
 import { ScrollWords } from "./ScrollWords";
 import { stepIcons } from "@/components/ui/LineIcons";
 
@@ -21,13 +20,15 @@ export function Philosophy() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-[70%_50%]"
+          // Wide screens crop the photograph to a low band: anchor it at the top, so the windows show, not the bare wall.
+          className="object-cover object-[70%_50%] lg:object-[50%_0%]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(9,9,9,0.9)_0%,rgba(9,9,9,0.55)_42%,rgba(9,9,9,0)_80%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(9,9,9,0.9)_0%,rgba(9,9,9,0)_40%)]" />
       </div>
 
-      <div className="container-site relative flex min-h-[100svh] flex-col justify-between gap-14 py-20 sm:gap-20 sm:py-24 lg:py-32">
+      {/* Height follows the content, so the statement and the steps stay together on tall and wide screens */}
+      <div className="container-site relative flex flex-col gap-14 py-20 sm:gap-16 sm:py-24 lg:gap-20 lg:py-32">
         {/* Statement */}
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-x-8">
           <h2
@@ -57,15 +58,7 @@ export function Philosophy() {
                   className="absolute inset-x-0 -top-px h-px origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out group-hover:scale-x-100"
                 />
                 {/* Phones: icon beside the text; larger screens: icon above it */}
-                <div className="flex shrink-0 items-start justify-between gap-4">
-                  <Icon className="h-12 w-12 text-white/75 transition-colors duration-700 group-hover:text-white sm:h-14 sm:w-14 lg:h-[4.5rem] lg:w-[4.5rem]" />
-                  {index < philosophy.steps.length - 1 && (
-                    <ArrowRight
-                      size={18}
-                      className="mt-1 hidden text-white/35 transition-[transform,color] duration-500 ease-out group-hover:translate-x-1 group-hover:text-accent lg:block"
-                    />
-                  )}
-                </div>
+                <Icon className="h-12 w-12 shrink-0 text-white/75 transition-colors duration-700 group-hover:text-white sm:h-14 sm:w-14 lg:h-[4.5rem] lg:w-[4.5rem]" />
                 <div className="sm:mt-10 lg:mt-14">
                   <h3 className="t-h3 text-white">{step.title}</h3>
                   <p className="t-small mt-2 max-w-[18rem] text-white/65 sm:mt-3">{step.text}</p>

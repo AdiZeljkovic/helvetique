@@ -6,7 +6,6 @@ import { expertise } from "@/content/site";
 import { images } from "@/content/images";
 import { cn } from "@/lib/cn";
 import { ArrowRight } from "@/components/ui/Icons";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { disciplineIcons } from "@/components/ui/LineIcons";
 
@@ -254,11 +253,6 @@ export function ExpertiseList({ children }: { children: ReactNode }) {
             );
           })}
         </ol>
-        <Reveal delay={items.length * 90}>
-          <Button href={expertise.cta.href} variant="text" external className="mt-10">
-            {expertise.cta.label}
-          </Button>
-        </Reveal>
       </div>
 
       {/* Sticky image panel, desktop only */}

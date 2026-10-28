@@ -125,6 +125,14 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
                 {company.address.city}
               </dd>
             </div>
+            <div className="col-span-2">
+              <dt className="t-small text-white/45">{contact.facts.email}</dt>
+              <dd className="mt-1.5">
+                <a href={company.email.href} className="text-white hover:text-white/70">
+                  {company.email.display}
+                </a>
+              </dd>
+            </div>
           </dl>
         </div>
       </div>

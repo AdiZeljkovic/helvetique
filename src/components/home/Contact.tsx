@@ -47,6 +47,22 @@ export function Contact() {
                   </div>
 
                   <div className="grid gap-3 border-b border-ink/15 py-6 sm:grid-cols-[7rem_1fr] sm:items-baseline sm:gap-6">
+                    <dt className="t-small text-muted">{contact.facts.email}</dt>
+                    <dd>
+                      <a
+                        href={company.email.href}
+                        className="group inline-flex items-center gap-3 text-[clamp(1.25rem,1.05rem+0.6vw,1.625rem)] leading-none tracking-[-0.02em] text-ink"
+                      >
+                        <span className="link-underline group-hover:link-underline-active">{company.email.display}</span>
+                        <ArrowRight
+                          size={16}
+                          className="shrink-0 text-accent transition-transform duration-500 ease-out group-hover:translate-x-1"
+                        />
+                      </a>
+                    </dd>
+                  </div>
+
+                  <div className="grid gap-3 border-b border-ink/15 py-6 sm:grid-cols-[7rem_1fr] sm:items-baseline sm:gap-6">
                     <dt className="t-small text-muted">{contact.facts.office}</dt>
                     <dd>
                       <address className="text-lg not-italic leading-snug tracking-[-0.01em] text-ink">

@@ -22,10 +22,10 @@ were matched with free photographs instead.
 | `expertise-bespoke.jpg`      | Expertise: built-ins       | 4:5    | https://unsplash.com/photos/RHARVor_ydc (CGI render) | Client |
 | `expertise-details.jpg`      | Expertise: details         | 4:5    | Client's own project (`detalji.jpg`)      | Client    |
 | `philosophy.jpg`             | Approach, full-bleed       | 16:10  | https://unsplash.com/photos/bE1NBPm_cNk   | Studio    |
-| `portfolio-interiors.jpg`    | Portfolio tile             | 4:5    | https://unsplash.com/photos/ehxwis6Ltxg   | Studio    |
-| `portfolio-doors.jpg`        | Portfolio tile             | 4:5    | https://unsplash.com/photos/ZdBTkh7jHmg   | Studio    |
-| `portfolio-details.jpg`      | Portfolio tile             | 4:5    | https://unsplash.com/photos/WQNH3LhQIsE   | Studio    |
-| `portfolio-bespoke.jpg`      | Portfolio tile             | 4:5    | https://unsplash.com/photos/mFH9FNydifw   | Studio    |
+| `portfolio-interiors.jpg`    | Portfolio panel            | 4:5    | https://unsplash.com/photos/caA5D7QCHyA   | Studio, to client references |
+| `portfolio-doors.jpg`        | Portfolio panel            | 4:5    | https://unsplash.com/photos/fUSb6H6oeis   | Studio, to client references |
+| `portfolio-bespoke.jpg`      | Portfolio panel            | 4:5    | https://unsplash.com/photos/o98pufp8Khk   | Studio, to client references |
+| `portfolio-details.jpg`      | Portfolio panel            | 4:5    | https://unsplash.com/photos/HuDZA8t__fE   | Studio, to client references |
 
 ## Replacing them with the studio's own photography
 

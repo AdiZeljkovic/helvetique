@@ -16,8 +16,7 @@
  *   featureDetail      3:4   tall photograph of the studio pair
  *   expertise*         4:5   interactive expertise panel
  *   philosophy         16:10 full-bleed background of the approach section
- *   portfolio*         4:5   category panels (opened panels are wider, so
- *                            `position` keeps the subject in frame)
+ *   portfolio*         4:5   category panels; one set, matched in tone (warm light oak, daylight)
  */
 
 export type SiteImage = {
@@ -25,7 +24,7 @@ export type SiteImage = {
   alt: string;
   width: number;
   height: number;
-  /** CSS object-position for frames much wider than the photograph (default: centre). */
+  /** CSS object-position, for frames much narrower than the photograph (default: centre). */
   position?: string;
 };
 
@@ -80,28 +79,29 @@ export const images = {
   },
   portfolioInteriors: {
     src: "/images/portfolio-interiors.jpg",
-    alt: "Sjene prozorskih okvira na zidu iznad svijetle sofe i okruglog drvenog stola",
+    alt: "Trpezarija obasjana toplim suncem, s rebrastim stolom, hrastovim stolicama i otvorenim policama",
     width: 1200,
     height: 1500,
-    position: "50% 90%",
   },
   portfolioDoors: {
     src: "/images/portfolio-doors.jpg",
-    alt: "Bijela dvokrilna vrata s profilisanim panelima iznad parketa u riblju kost",
+    alt: "Otvorena okretna vrata od hrastovih letvica, uklopljena u zidnu oblogu od istih letvica",
     width: 1200,
     height: 1500,
   },
   portfolioBespoke: {
     src: "/images/portfolio-bespoke.jpg",
-    alt: "Ugradne police u obliku luka od svijetlog drveta s keramikom i knjigama",
+    alt: "Ugradbeni ormar od svijetlog hrasta od poda do plafona, s otvorenim vratima i policama",
     width: 1200,
     height: 1500,
   },
   portfolioDetails: {
     src: "/images/portfolio-details.jpg",
-    alt: "Zakrivljena klupa od drvenih letvica, detalj iz blizine",
+    alt: "Hrastov opšav i klupica oko velikog prozora s pogledom na terasu",
     width: 1200,
     height: 1500,
+    // The oak lining is on the right; keep it in the narrow, closed panel.
+    position: "85% 50%",
   },
 } as const satisfies Record<string, SiteImage>;
 

@@ -4,7 +4,8 @@ import { HeroImage } from "./HeroImage";
 
 /**
  * Full-screen photograph with a large white headline set at the bottom,
- * a short lede and two quiet calls to action.
+ * a short lede and one quiet call to action into the page (PortMix.ch stays
+ * in the header, so visitors are not sent away from the first screen).
  */
 export function Hero() {
   return (
@@ -30,9 +31,6 @@ export function Hero() {
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:col-span-4 lg:col-start-7">
             <Button href={hero.primaryCta.href} variant="solid-light">
               {hero.primaryCta.label}
-            </Button>
-            <Button href={hero.secondaryCta.href} variant="text-light" external>
-              {hero.secondaryCta.label}
             </Button>
           </div>
         </div>

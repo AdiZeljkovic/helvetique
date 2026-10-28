@@ -123,9 +123,13 @@ body {
   color: var(--color-paper);
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+/* In the base layer, so a component can replace it with its own focus style
+   (the form fields darken their underline instead of drawing a frame). */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
 }
 
 h1,

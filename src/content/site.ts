@@ -22,6 +22,10 @@ export const company = {
     href: "tel:+38733741843",
     e164: "+38733741843",
   },
+  email: {
+    display: "info@helvetique.ba",
+    href: "mailto:info@helvetique.ba",
+  },
   companyId: "4203663110007",
   vatNote: "Nije u sistemu PDV-a",
   /** Tržišta na kojima studio radi. */
@@ -53,7 +57,6 @@ export const ui = {
   openMenu: "Otvori meni",
   closeMenu: "Zatvori meni",
   opensInNewTab: "(otvara se u novoj kartici)",
-  viewOn: (category: string, site: string) => `Kategorija ${category} na ${site}`,
   footer: {
     ctaLabel: "Novi projekat",
     /** The closing question mark is added in red by the footer. */
@@ -87,9 +90,9 @@ export const ui = {
     },
     successTitle: "Hvala Vam. Upit je uspješno poslan.",
     successText: "Javit ćemo Vam se uskoro. Za hitne upite nazovite",
-    unconfiguredText: "Obrazac trenutno nije povezan s našim sistemom e-pošte. Molimo Vas da nazovete",
-    unconfiguredTail: "i rado ćemo Vam pomoći.",
-    failedText: "Upit trenutno nije moguće poslati. Pokušajte ponovo ili nazovite",
+    unconfiguredText: "Obrazac trenutno nije povezan s našim sistemom e-pošte. Pišite nam na",
+    failedText: "Upit trenutno nije moguće poslati. Pokušajte ponovo, pišite nam na",
+    orCall: "ili nazovite",
   },
 } as const;
 
@@ -97,17 +100,16 @@ export const hero = {
   headline: ["Prostori oblikovani", "s namjerom"],
   lede: "Oblikujemo enterijere i kreiramo prostore po Vašoj mjeri, od prve ideje do realizacije, uz pažljivu koordinaciju i dugoročna partnerstva.",
   primaryCta: { label: "Upoznajte studio", href: "#studio" },
-  secondaryCta: { label: "Pogledajte portfolio", href: portmix.url },
 } as const;
 
 export const studio = {
   headline: ["Partner za enterijer", "i detalj."],
   lead: "Helvetique architecture je studio za dizajn enterijera, vrata i namještaj po mjeri, sa sjedištem u Sarajevu. Svaki projekat razrađujemo do tehničke i radioničke dokumentacije za proizvođače.",
-  text: "Ne projektujemo objekte: s arhitektima i izvođačima sarađujemo kao partner za enterijer i detalj. Širi portfolio i reference predstavljeni su na PortMix.ch.",
+  text: "Specijalizovani smo za enterijer i detalj i sarađujemo s arhitektima i izvođačima tamo gdje se projekat pretvara u prostor: od rasporeda i namještaja do vrata i izvedbenih nacrta. Širi portfolio i reference predstavljeni su na PortMix.ch.",
   facts: [
     { term: "Za koga", detail: "Privatni klijenti, investitori, arhitekti i proizvođači" },
     { term: "Gdje radimo", detail: company.markets.map((market) => market.name).join(" i ") },
-    { term: "Portfolio", detail: "PortMix.ch", href: portmix.url },
+    { term: "Portfolio", detail: "PortMix.ch" },
   ],
   detailCaption: "Stepenište s drvenim gazištima",
   wideCaption: "Ulaz: vrata, stolarija i stepenište",
@@ -117,7 +119,6 @@ export const expertise = {
   headline: ["Od koncepta", "do detalja."],
   intro: "Četiri discipline, jedan pristup: jasna ideja, razrađena do tehničke i radioničke dokumentacije za proizvođače.",
   scopeLabel: "Šta radimo",
-  cta: { label: "Pogledajte portfolio na PortMix.ch", href: portmix.url },
   items: [
     {
       title: "Dizajn enterijera",
@@ -170,7 +171,6 @@ export const portfolio = {
     { title: "Prostori po mjeri", image: "portfolioBespoke", icon: "bespoke" },
     { title: "Detalji", image: "portfolioDetails", icon: "details" },
   ],
-  tileCta: "Pogledajte na PortMix.ch",
   cta: { label: "Pogledajte kompletan portfolio", href: portmix.url },
 } as const;
 
@@ -190,6 +190,7 @@ export const contact = {
   },
   facts: {
     telephone: "Telefon",
+    email: "E-mail",
     office: "Adresa",
     company: "Kompanija",
   },

@@ -243,6 +243,11 @@ export function ContactForm({ tone = "light" }: { tone?: Tone }) {
       {company.phone.display}
     </a>
   );
+  const emailLink = (
+    <a href={company.email.href} className={cn("underline underline-offset-4", t.link)}>
+      {company.email.display}
+    </a>
+  );
 
   if (status === "sent") {
     return (
@@ -297,12 +302,12 @@ export function ContactForm({ tone = "light" }: { tone?: Tone }) {
       <div role="status" aria-live="polite" className="min-h-[1.5rem]">
         {status === "failed" && failure === "unconfigured" ? (
           <p className={cn("border-l border-accent pl-4 text-sm leading-relaxed", t.status)}>
-            {ui.form.unconfiguredText} {phoneLink} {ui.form.unconfiguredTail}
+            {ui.form.unconfiguredText} {emailLink} {ui.form.orCall} {phoneLink}.
           </p>
         ) : null}
         {status === "failed" && failure !== null && failure !== "unconfigured" ? (
           <p className={cn("border-l border-accent pl-4 text-sm leading-relaxed", t.status)}>
-            {ui.form.failedText} {phoneLink}.
+            {ui.form.failedText} {emailLink} {ui.form.orCall} {phoneLink}.
           </p>
         ) : null}
       </div>

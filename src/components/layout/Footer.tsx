@@ -89,8 +89,11 @@ export function Footer() {
                 <br />
                 {company.address.city}
               </address>
-              <a href={company.phone.href} className="t-small mt-3 inline-block text-white hover:text-white/70">
+              <a href={company.phone.href} className="t-small mt-3 block w-fit text-white hover:text-white/70">
                 {company.phone.display}
+              </a>
+              <a href={company.email.href} className="t-small mt-1.5 block w-fit text-white hover:text-white/70">
+                {company.email.display}
               </a>
             </div>
 

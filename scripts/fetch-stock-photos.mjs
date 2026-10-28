@@ -46,10 +46,12 @@ const photos = [
   // Chosen to match the client's selection and references
   { file: "expertise-interiors.jpg", page: "https://unsplash.com/photos/wH7J4LAkQ7M", url: unsplash("photo-1752407828551-a5c11b213472"), width: 1200, height: 1500, position: "centre" },
   { file: "philosophy.jpg", page: "https://unsplash.com/photos/bE1NBPm_cNk", url: unsplash("photo-1778034506255-ad33053cbbdd"), width: 1920, height: 1200, position: "centre", top: 0.36 },
-  { file: "portfolio-interiors.jpg", page: "https://unsplash.com/photos/ehxwis6Ltxg", url: unsplash("photo-1583329550487-0fa300a4cd1a"), width: 1200, height: 1500, position: "bottom" },
-  { file: "portfolio-doors.jpg", page: "https://unsplash.com/photos/ZdBTkh7jHmg", url: unsplash("photo-1561111283-8eff0e921cf6"), width: 1200, height: 1500, position: "centre" },
-  { file: "portfolio-details.jpg", page: "https://unsplash.com/photos/WQNH3LhQIsE", url: unsplash("photo-1788042282155-67efd082be53"), width: 1200, height: 1500, position: "centre" },
-  { file: "portfolio-bespoke.jpg", page: "https://unsplash.com/photos/mFH9FNydifw", url: unsplash("photo-1647481045013-8efc5594369d"), width: 1200, height: 1500, position: "centre" },
+  // Portfolio set, matched to the client's second round of references:
+  // warm light oak, soft daylight, contemporary (nothing rustic).
+  { file: "portfolio-interiors.jpg", page: "https://unsplash.com/photos/caA5D7QCHyA", url: unsplash("photo-1772442363851-738a548f6c5c"), width: 1200, height: 1500, position: "centre" },
+  { file: "portfolio-doors.jpg", page: "https://unsplash.com/photos/fUSb6H6oeis", url: unsplash("photo-1634822930432-0594057fdff2"), width: 1200, height: 1500, position: "centre" },
+  { file: "portfolio-bespoke.jpg", page: "https://unsplash.com/photos/o98pufp8Khk", url: unsplash("photo-1755288556494-df59e71850b8"), width: 1200, height: 1500, position: "centre" },
+  { file: "portfolio-details.jpg", page: "https://unsplash.com/photos/HuDZA8t__fE", url: unsplash("photo-1772475385581-9bec234dc2ea"), width: 1200, height: 1500, position: "centre" },
 ];
 
 const only = new Set(process.argv.slice(2));

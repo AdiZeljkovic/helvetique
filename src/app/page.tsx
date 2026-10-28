@@ -23,6 +23,7 @@ const structuredData = {
       logo: `${siteUrl}/brand/helvetique-logo.png`,
       image: `${siteUrl}/opengraph-image`,
       telephone: company.phone.e164,
+      email: company.email.display,
       address: {
         "@type": "PostalAddress",
         streetAddress: company.address.street,
