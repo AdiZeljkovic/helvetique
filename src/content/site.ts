@@ -105,7 +105,7 @@ export const hero = {
 export const studio = {
   headline: ["Partner za enterijer", "i detalj."],
   lead: "Helvetique architecture je studio za dizajn enterijera, vrata i namještaj po mjeri, sa sjedištem u Sarajevu. Svaki projekat razrađujemo do tehničke i radioničke dokumentacije za proizvođače.",
-  text: "Specijalizovani smo za enterijer i detalj i sarađujemo s arhitektima i izvođačima tamo gdje se projekat pretvara u prostor: od rasporeda i namještaja do vrata i izvedbenih nacrta. Širi portfolio i reference predstavljeni su na PortMix.ch.",
+  text: "Specijalizovani smo za enterijer i detalj. Sarađujemo s arhitektima i izvođačima tamo gdje se projekat pretvara u prostor: od rasporeda i namještaja do vrata i izvedbenih nacrta. Širi portfolio i reference predstavljeni su na PortMix.ch.",
   facts: [
     { term: "Za koga", detail: "Privatni klijenti, investitori, arhitekti i proizvođači" },
     { term: "Gdje radimo", detail: company.markets.map((market) => market.name).join(" i ") },
@@ -171,7 +171,7 @@ export const portfolio = {
     { title: "Prostori po mjeri", image: "portfolioBespoke", icon: "bespoke" },
     { title: "Detalji", image: "portfolioDetails", icon: "details" },
   ],
-  cta: { label: "Pogledajte kompletan portfolio", href: portmix.url },
+  cta: { label: "Projekti realizovani u saradnji s našim partnerima", href: portmix.url },
 } as const;
 
 export const contact = {
