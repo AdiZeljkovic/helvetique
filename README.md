@@ -34,11 +34,18 @@ mounts deliver no file events and Turbopack would not reload. A change to
 `package.json` or `package-lock.json` rebuilds the image; a change to
 `next.config.ts` restarts the server. Stop with `docker compose down`.
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to the
-production origin before deploying (it feeds canonical URLs, Open Graph,
-`robots.txt` and `sitemap.xml`). A production build fails without it, so a
-deploy can never publish canonical URLs pointing at localhost. With an
-`https://` origin the site also sends HSTS and upgrades insecure requests.
+The production origin, `https://helvetique.ba`, is set in `.env.production`
+(committed; it is public). `next build` reads it for canonical URLs, Open
+Graph, `robots.txt` and `sitemap.xml`; a production build fails without it, so
+a deploy can never publish canonical URLs pointing at localhost. Because the
+origin is `https://`, the site also sends HSTS and upgrades insecure requests,
+so the server must serve it over HTTPS. To use another domain (for example
+`www.`), edit that file or set `NEXT_PUBLIC_SITE_URL` on the server, which
+takes precedence. Local secrets, if any, go in `.env.local` (see `.env.example`).
+
+Deploy: `npm ci && npm run build && npm run start` on Node 20 or later. The
+site needs a Node.js server (or a host with Next.js support) for image
+optimisation; a plain static host is not enough.
 
 ## Where things live
 

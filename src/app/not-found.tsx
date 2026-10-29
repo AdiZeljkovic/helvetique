@@ -7,6 +7,10 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export const metadata: Metadata = {
   title: notFound.title,
+  // Replace the home page's index/follow and canonical inherited from the layout;
+  // Next.js adds its own noindex for the 404, and the two must not contradict it.
+  robots: { index: false, follow: true },
+  alternates: { canonical: null },
 };
 
 /**

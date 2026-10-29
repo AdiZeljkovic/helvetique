@@ -3,6 +3,7 @@ import { company, navigation, portmix, ui } from "@/content/site";
 import { Logo } from "@/components/brand/Logo";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { cn } from "@/lib/cn";
+import { CurrentYear } from "./CurrentYear";
 
 /**
  * Footer on Architectural Black, over the 12-column grid drawn in faint lines:
@@ -100,10 +101,11 @@ export function Footer() {
             <div>
               <p className="t-small text-white/45">{ui.footer.navigation}</p>
               <nav aria-label={ui.footerNav} className="mt-5">
-                <ul className="space-y-2.5">
+                {/* Each link is a 32 px tall row (tap targets need at least 24 px); no gaps, so the rhythm stays as before */}
+                <ul>
                   {navigation.map((item) => (
                     <li key={item.href}>
-                      <Link href={item.href} className="group inline-flex items-center gap-2 text-white/80 hover:text-white">
+                      <Link href={item.href} className="group flex min-h-8 w-fit items-center gap-2 text-white/80 hover:text-white">
                         <ArrowRight
                           size={12}
                           className="-ml-5 text-accent opacity-0 transition-[margin,opacity] duration-500 ease-out group-hover:ml-0 group-hover:opacity-100"
@@ -150,7 +152,7 @@ export function Footer() {
         {/* 3. Legal line */}
         <div className="t-small flex flex-col gap-4 border-t border-white/15 py-8 text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {company.legalName}
+            © <CurrentYear buildYear={year} /> {company.legalName}
           </p>
           <Link href="#home" className="group inline-flex items-center gap-4 text-white/70 hover:text-white">
             {ui.footer.backToTop}
