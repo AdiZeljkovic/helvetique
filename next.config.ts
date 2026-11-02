@@ -40,14 +40,16 @@ const csp = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-ancestors 'none'",
+  // Samo panel (pregled sajta pored forme) smije prikazati sajt u okviru.
+  `frame-ancestors ${cms ? `'self' ${cms.origin}` : "'none'"}`,
   ...(isHttps ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: csp },
   { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "X-Frame-Options", value: "DENY" },
+  // X-Frame-Options ne zna za „samo ova adresa" — kad postoji CMS, frame-ancestors gore to radi.
+  ...(cms ? [] : [{ key: "X-Frame-Options", value: "DENY" }]),
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   {
