@@ -210,17 +210,35 @@ function mapiraj(d: J | null): Sadrzaj {
   };
 }
 
+/**
+ * Zadnji uspješan odgovor CMS-a (u memoriji procesa). Ako CMS nakratko ne odgovara
+ * (restart, deploy), stranica se pravi od njega — a ne od starog teksta iz koda,
+ * koji bi se onda keširao do sat vremena. Pri buildu jedan pokušaj (bez čekanja).
+ */
+const zadnjiDobar = new Map<string, J>();
+const pokusaja = () => (process.env.NEXT_PHASE === "phase-production-build" ? 1 : 3);
+const pauza = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 async function povuci(): Promise<J | null> {
   if (!CMS_URL) return null;
-  try {
-    const res = await fetch(`${CMS_URL}/api/globals/helvetique?depth=1&locale=bs`, {
-      next: { tags: [CMS_OZNAKA], revalidate: 3600 },
-      signal: AbortSignal.timeout(8000),
-    });
-    return res.ok ? ((await res.json()) as J) : null;
-  } catch {
-    return null;
+  for (let i = 0; i < pokusaja(); i++) {
+    if (i) await pauza(1000 * i);
+    try {
+      const res = await fetch(`${CMS_URL}/api/globals/helvetique?depth=1&locale=bs`, {
+        next: { tags: [CMS_OZNAKA], revalidate: 3600 },
+        signal: AbortSignal.timeout(5000),
+      });
+      if (res.ok) {
+        const d = (await res.json()) as J;
+        zadnjiDobar.set("bs", d);
+        return d;
+      }
+      if (res.status < 500) break;
+    } catch {
+      /* CMS ne odgovara — novi pokušaj */
+    }
   }
+  return zadnjiDobar.get("bs") ?? null;
 }
 
 /** Sadržaj za serverske komponente (jednom po renderu). Klijentske ga dobijaju kroz `useSadrzaj()`. */
