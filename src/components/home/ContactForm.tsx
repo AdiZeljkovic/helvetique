@@ -1,7 +1,8 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { company, contact, ui } from "@/content/site";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
+import type { Sadrzaj } from "@/content/cms";
 import { submitInquiry, type InquiryPayload, type SubmitResult } from "@/lib/contact";
 import { cn } from "@/lib/cn";
 import { ArrowRight } from "@/components/ui/Icons";
@@ -15,15 +16,15 @@ type Tone = "light" | "dark";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /** Errors are added in the order the fields appear, so focus goes to the first one on screen. */
-function validate(values: InquiryPayload): Errors {
+function validate(values: InquiryPayload, poruke: Sadrzaj["ui"]["form"]["errors"]): Errors {
   const errors: Errors = {};
-  if (values.subject.trim().length < 2) errors.subject = ui.form.errors.subject;
-  if (values.name.trim().length < 2) errors.name = ui.form.errors.name;
-  if (!EMAIL_PATTERN.test(values.email.trim())) errors.email = ui.form.errors.email;
+  if (values.subject.trim().length < 2) errors.subject = poruke.subject;
+  if (values.name.trim().length < 2) errors.name = poruke.name;
+  if (!EMAIL_PATTERN.test(values.email.trim())) errors.email = poruke.email;
   if (values.phone && values.phone.replace(/[\s()+\-./]/g, "").length < 6) {
-    errors.phone = ui.form.errors.phone;
+    errors.phone = poruke.phone;
   }
-  if (values.message.trim().length < 20) errors.message = ui.form.errors.message;
+  if (values.message.trim().length < 20) errors.message = poruke.message;
   return errors;
 }
 
@@ -95,6 +96,7 @@ type FieldProps = {
 
 /** Underlined, transparent field with a small label above. Uncontrolled. */
 function Field({ formId, tone, name, label, error, type = "text", autoComplete, optional = false, textarea = false }: FieldProps) {
+  const { ui } = useSadrzaj();
   const t = themes[tone];
   const fieldId = `${formId}-${name}`;
   const errorId = `${fieldId}-error`;
@@ -197,6 +199,7 @@ function TopicField({ formId, tone, label, topics, error }: TopicFieldProps) {
 }
 
 export function ContactForm({ tone = "light" }: { tone?: Tone }) {
+  const { company, contact, ui } = useSadrzaj();
   const t = themes[tone];
   const formId = useId();
   const [errors, setErrors] = useState<Errors>({});
@@ -219,7 +222,7 @@ export function ContactForm({ tone = "light" }: { tone?: Tone }) {
       message: String(data.get("message") ?? ""),
     };
 
-    const nextErrors = validate(values);
+    const nextErrors = validate(values, ui.form.errors);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) {
       const firstInvalidName = (Object.keys(nextErrors) as FieldName[])[0];

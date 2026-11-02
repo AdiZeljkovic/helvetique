@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { company, contact, navigation, portmix, ui } from "@/content/site";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
 import { cn } from "@/lib/cn";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
@@ -18,6 +18,7 @@ type MobileMenuProps = {
  * Locks scroll, closes on Escape, and is inert while closed.
  */
 export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
+  const { company, contact, navigation, portmix, ui } = useSadrzaj();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

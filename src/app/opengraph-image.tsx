@@ -2,20 +2,33 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import sharp from "sharp";
-import { company, hero, seo } from "@/content/site";
+import { company, seo } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 
+// `alt` mora biti statičan, pa ostaje iz koda; slika i tekst na njoj dolaze iz CMS-a.
 export const alt = `${company.legalName} — ${seo.ogAlt}`;
 export const size = { width: 1200, height: 630 };
 // JPEG, not PNG: the card is mostly photograph, and messengers such as
 // WhatsApp drop link previews whose image is much over ~300 KB.
 export const contentType = "image/jpeg";
 
+/** Naslovna fotografija: iz CMS-a (URL) ili, bez CMS-a, iz /public. */
+async function heroFoto(src: string): Promise<Buffer | string> {
+  if (!/^https?:\/\//.test(src)) return join(process.cwd(), "public", src);
+  try {
+    const res = await fetch(src, { signal: AbortSignal.timeout(10000) });
+    if (res.ok) return Buffer.from(await res.arrayBuffer());
+  } catch {}
+  return join(process.cwd(), "public", "images", "hero.jpg");
+}
+
 export default async function OpenGraphImage() {
+  const { hero, seo, images } = await getSadrzaj();
   const fontsDir = join(process.cwd(), "src", "assets", "fonts");
   const [regular, medium, photo, logo] = await Promise.all([
     readFile(join(fontsDir, "HostGrotesk-400.ttf")),
     readFile(join(fontsDir, "HostGrotesk-500.ttf")),
-    sharp(join(process.cwd(), "public", "images", "hero.jpg"))
+    sharp(await heroFoto(images.hero.src))
       .resize(size.width, size.height, { fit: "cover", position: "centre" })
       .jpeg({ quality: 80 })
       .toBuffer(),

@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { portfolio } from "@/content/site";
-import { images } from "@/content/images";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
 import { cn } from "@/lib/cn";
 import { disciplineIcons } from "@/components/ui/LineIcons";
 
@@ -19,6 +18,7 @@ const HOVER_INTENT_MS = 90;
  * link band below, so visitors are not sent away from every picture.
  */
 export function PortfolioGallery() {
+  const { portfolio, images } = useSadrzaj();
   // `changed` keeps icons from redrawing on first render; they draw in with the reveal instead.
   const [{ active, changed }, setSelection] = useState({ active: 0, changed: false });
   const hoverTimer = useRef<number | undefined>(undefined);
@@ -59,7 +59,7 @@ export function PortfolioGallery() {
                 alt={image.alt}
                 fill
                 sizes="(min-width: 1600px) 660px, (min-width: 1280px) 46vw, (min-width: 1024px) 23vw, 50vw"
-                style={{ objectPosition: "position" in image ? image.position : undefined }}
+                style={{ objectPosition: image.position }}
                 className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.03]"
               />
               {/* Legibility gradient, and a veil over the panels that are not open */}

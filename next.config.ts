@@ -14,6 +14,15 @@ function originOf(url: string | undefined): string {
 }
 const contactOrigin = originOf(process.env.NEXT_PUBLIC_CONTACT_ENDPOINT);
 
+/** PortMix CMS: odatle dolaze fotografije (next/image ih smanjuje kao i lokalne). */
+const cms = (() => {
+  try {
+    return process.env.CMS_URL ? new URL(process.env.CMS_URL) : null;
+  } catch {
+    return null;
+  }
+})();
+
 /**
  * Content Security Policy without nonces, so the page stays statically prerendered
  * (nonces would force dynamic rendering). Next.js streams its payload in inline
@@ -56,6 +65,18 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920],
     // 75 for photographs, 90 for the logo (see src/components/brand/Logo.tsx).
     qualities: [75, 90],
+    remotePatterns: cms
+      ? [
+          {
+            protocol: cms.protocol === "http:" ? "http" : "https",
+            hostname: cms.hostname,
+            port: cms.port,
+            pathname: "/api/mediji/file/**",
+          },
+        ]
+      : [],
+    // Lokalno je CMS na localhost-u; u produkciji je na javnoj adresi.
+    dangerouslyAllowLocalIP: isDev || process.env.CMS_LOKALNO === "1",
   },
   poweredByHeader: false,
   async headers() {

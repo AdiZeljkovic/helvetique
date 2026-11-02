@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { philosophy } from "@/content/site";
-import { images } from "@/content/images";
+import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
 import { ScrollWords } from "./ScrollWords";
 import { stepIcons } from "@/components/ui/LineIcons";
@@ -10,7 +9,8 @@ import { stepIcons } from "@/components/ui/LineIcons";
  * statement whose words light up while scrolling, and the four working steps
  * at the foot, on one glass band read left to right like a process.
  */
-export function Philosophy() {
+export async function Philosophy() {
+  const { philosophy, images } = await getSadrzaj();
   return (
     <section aria-labelledby="philosophy-heading" className="relative overflow-hidden bg-night text-white">
       {/* Background photograph with legibility gradients */}
@@ -20,6 +20,7 @@ export function Philosophy() {
           alt=""
           fill
           sizes="100vw"
+          style={{ objectPosition: images.philosophy.position }}
           // Wide screens crop the photograph to a low band: anchor it at the top, so the windows show, not the bare wall.
           className="object-cover object-[70%_50%] lg:object-[50%_0%]"
         />

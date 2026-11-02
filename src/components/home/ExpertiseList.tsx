@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from "react";
-import { expertise } from "@/content/site";
-import { images } from "@/content/images";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
 import { cn } from "@/lib/cn";
 import { ArrowRight } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -72,6 +71,7 @@ function glideToTop(row: Element): () => void {
  * tapping the open one closes it.
  */
 export function ExpertiseList({ children }: { children: ReactNode }) {
+  const { expertise, images } = useSadrzaj();
   const items = expertise.items;
   const panelId = useId();
   // `previous` stays visible under the incoming photograph while it is raised.
@@ -224,6 +224,7 @@ export function ExpertiseList({ children }: { children: ReactNode }) {
                           alt={image.alt}
                           fill
                           sizes="100vw"
+                          style={{ objectPosition: image.position }}
                           className={cn(
                             "object-cover transition-transform duration-[1200ms] ease-out",
                             isOpen ? "scale-100" : "scale-[1.08]",
@@ -281,6 +282,7 @@ export function ExpertiseList({ children }: { children: ReactNode }) {
                     alt={isActive ? image.alt : ""}
                     fill
                     sizes="(min-width: 1600px) 600px, 40vw"
+                    style={{ objectPosition: image.position }}
                     className={cn("object-cover", animate && "animate-settle motion-reduce:animate-none")}
                   />
                 </div>

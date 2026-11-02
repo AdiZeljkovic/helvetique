@@ -1,4 +1,4 @@
-import { hero } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { Button } from "@/components/ui/Button";
 import { HeroImage } from "./HeroImage";
 
@@ -7,7 +7,8 @@ import { HeroImage } from "./HeroImage";
  * a short lede and one quiet call to action into the page (PortMix.ch stays
  * in the header, so visitors are not sent away from the first screen).
  */
-export function Hero() {
+export async function Hero() {
+  const { hero } = await getSadrzaj();
   return (
     <section
       id="home"

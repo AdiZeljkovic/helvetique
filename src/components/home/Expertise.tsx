@@ -1,4 +1,4 @@
-import { expertise } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
 import { ExpertiseList } from "./ExpertiseList";
 
@@ -7,7 +7,8 @@ import { ExpertiseList } from "./ExpertiseList";
  * The headline and intro open the left column above the interactive list; the
  * photograph panel runs beside them from the top of the section.
  */
-export function Expertise() {
+export async function Expertise() {
+  const { expertise } = await getSadrzaj();
   return (
     <section id="expertise" aria-labelledby="expertise-heading" className="scroll-mt-[var(--header-h)] bg-mist">
       <div className="container-site section-y">

@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { images } from "@/content/images";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
 
 /**
  * Full-bleed hero photograph. Settles in from a slight zoom on load and drifts
  * at a fraction of scroll speed. Both effects are skipped for reduced motion.
  */
 export function HeroImage() {
+  const { images } = useSadrzaj();
   const frameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,6 +45,8 @@ export function HeroImage() {
             preload
             fetchPriority="high"
             sizes="100vw"
+            // Fokus postavljen u CMS-u ima prednost pred podrazumijevanim kadrom.
+            style={{ objectPosition: images.hero.position }}
             className="object-cover object-[62%_50%]"
           />
         </div>

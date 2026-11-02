@@ -2,19 +2,19 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { navigation, portmix, ui } from "@/content/site";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
 import { cn } from "@/lib/cn";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { MobileMenu } from "./MobileMenu";
 import { Wordmark } from "./Wordmark";
-
-const SECTION_IDS = navigation.map((item) => item.href.slice(1));
 
 /**
  * Fixed header. White type over the full-bleed hero, then a white bar with a
  * hairline once the page scrolls. The section in view is underlined.
  */
 export function Header() {
+  const { navigation, portmix, ui } = useSadrzaj();
+  const sectionIds = navigation.map((item) => item.href.slice(1)).join(",");
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,7 +37,7 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+    const sections = sectionIds.split(",").map((id) => document.getElementById(id)).filter(
       (el): el is HTMLElement => el !== null,
     );
     if (sections.length === 0) return;
@@ -51,7 +51,7 @@ export function Header() {
     );
     sections.forEach((section) => io.observe(section));
     return () => io.disconnect();
-  }, []);
+  }, [sectionIds]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), []);

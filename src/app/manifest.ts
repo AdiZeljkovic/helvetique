@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { company, seo } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 
 /** Web app manifest: name, colours and icons when the site is added to a home screen. */
-export default function manifest(): MetadataRoute.Manifest {
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const { company, seo } = await getSadrzaj();
   return {
     name: company.shortName,
     short_name: "Helvetique",

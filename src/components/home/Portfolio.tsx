@@ -1,4 +1,4 @@
-import { portfolio, portmix, ui } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { PortfolioGallery } from "./PortfolioGallery";
@@ -8,7 +8,8 @@ import { PortfolioGallery } from "./PortfolioGallery";
  * that open on hover, see PortfolioGallery) and a full-width link band to
  * PortMix.ch that fills with black from the left on hover.
  */
-export function Portfolio() {
+export async function Portfolio() {
+  const { portfolio, portmix, ui } = await getSadrzaj();
   return (
     <section id="portfolio" aria-labelledby="portfolio-heading" className="scroll-mt-[var(--header-h)] bg-paper">
       <div className="container-site py-20 sm:py-24 lg:py-32">

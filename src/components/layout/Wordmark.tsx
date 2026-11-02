@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { company } from "@/content/site";
+import { useSadrzaj } from "@/content/SadrzajKontekst";
 import { cn } from "@/lib/cn";
 import { Logo } from "@/components/brand/Logo";
 
@@ -15,6 +17,7 @@ type WordmarkProps = {
  * reverse logo over the hero photograph to the primary logo on white.
  */
 export function Wordmark({ tone = "dark", className, onClick }: WordmarkProps) {
+  const { company } = useSadrzaj();
   return (
     <Link href="#home" onClick={onClick} aria-label={company.legalName} className={cn("relative block w-[220px]", className)}>
       <Logo

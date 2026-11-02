@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { company, notFound } from "@/content/site";
+import { notFound as notFoundZadano } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export const metadata: Metadata = {
-  title: notFound.title,
+  // not-found ne može imati generateMetadata; naslov kartice ostaje iz koda.
+  title: notFoundZadano.title,
   // Replace the home page's index/follow and canonical inherited from the layout;
   // Next.js adds its own noindex for the 404, and the two must not contradict it.
   robots: { index: false, follow: true },
@@ -17,7 +19,8 @@ export const metadata: Metadata = {
  * 404 in the site's own language and grid. The header is left out on purpose:
  * its links are in-page anchors that only work on the home page.
  */
-export default function NotFound() {
+export default async function NotFound() {
+  const { company, notFound } = await getSadrzaj();
   return (
     <main id="main" className="flex min-h-[100svh] flex-col bg-paper">
       <div className="container-site flex h-[var(--header-h)] items-center">

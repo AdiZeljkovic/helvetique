@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { studio } from "@/content/site";
-import { images } from "@/content/images";
+import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
 
 /**
@@ -10,7 +9,8 @@ import { Reveal } from "@/components/ui/Reveal";
  *    the facts beneath it, and in the last four columns the supporting text
  *    above a tall photograph, continuing the column the lead opens.
  */
-export function StudioIntro() {
+export async function StudioIntro() {
+  const { studio, images } = await getSadrzaj();
   return (
     <section id="studio" aria-labelledby="studio-heading" className="scroll-mt-[var(--header-h)] bg-paper">
       <div className="container-site section-y">
@@ -39,6 +39,7 @@ export function StudioIntro() {
                   alt={images.featureMain.alt}
                   fill
                   sizes="(min-width: 1600px) 990px, (min-width: 1024px) 62vw, 100vw"
+                  style={{ objectPosition: images.featureMain.position }}
                   className="object-cover"
                 />
               </div>
@@ -62,6 +63,7 @@ export function StudioIntro() {
                     alt={images.featureDetail.alt}
                     fill
                     sizes="(min-width: 1600px) 490px, (min-width: 1024px) 31vw, (min-width: 640px) 50vw, 66vw"
+                    style={{ objectPosition: images.featureDetail.position }}
                     className="object-cover"
                   />
                 </div>
@@ -72,8 +74,8 @@ export function StudioIntro() {
 
           <Reveal delay={200} className="lg:col-span-8 lg:row-start-2">
             <dl className="grid gap-x-8 sm:grid-cols-3">
-              {studio.facts.map((fact) => (
-                <div key={fact.term} className="border-t border-line py-5 sm:pb-0">
+              {studio.facts.map((fact, i) => (
+                <div key={i}className="border-t border-line py-5 sm:pb-0">
                   <dt className="t-small text-muted">{fact.term}</dt>
                   <dd className="mt-2 text-[1.0625rem] leading-snug tracking-[-0.01em] text-ink">{fact.detail}</dd>
                 </div>

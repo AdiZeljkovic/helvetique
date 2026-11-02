@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { company, navigation, portmix, ui } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { Logo } from "@/components/brand/Logo";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { cn } from "@/lib/cn";
@@ -13,7 +13,8 @@ import { CurrentYear } from "./CurrentYear";
  *    portfolio and company columns.
  * 3. Legal line with a back-to-top button.
  */
-export function Footer() {
+export async function Footer() {
+  const { company, navigation, portmix, ui } = await getSadrzaj();
   const year = new Date().getFullYear();
 
   return (

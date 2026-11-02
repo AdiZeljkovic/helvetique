@@ -6,8 +6,11 @@ import { Expertise } from "@/components/home/Expertise";
 import { Philosophy } from "@/components/home/Philosophy";
 import { Portfolio } from "@/components/home/Portfolio";
 import { Contact } from "@/components/home/Contact";
-import { company, seo } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { siteUrl } from "@/lib/site-url";
+
+export default async function HomePage() {
+  const { company, seo } = await getSadrzaj();
 
 /** Structured data built only from verified company facts. */
 const structuredData = {
@@ -48,7 +51,6 @@ const structuredData = {
 // Escape "<" so the payload can never close the script tag (Next.js JSON-LD guidance).
 const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
 
-export default function HomePage() {
   return (
     <>
       <Header />

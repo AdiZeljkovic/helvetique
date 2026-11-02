@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { ui } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { ArrowRight, ArrowUpRight } from "./Icons";
 
 type Variant = "solid" | "solid-light" | "text" | "text-light";
@@ -24,7 +24,8 @@ const variants: Record<Variant, string> = {
  * Two kinds of call to action: a solid rectangle for primary actions and a
  * plain text link with a growing underline for everything else.
  */
-export function Button({ href, children, variant = "solid", external = false, className }: ButtonProps) {
+export async function Button({ href, children, variant = "solid", external = false, className }: ButtonProps) {
+  const { ui } = await getSadrzaj();
   const isText = variant === "text" || variant === "text-light";
   const Icon = external ? ArrowUpRight : ArrowRight;
   const classes = cn(

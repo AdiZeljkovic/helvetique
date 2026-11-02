@@ -1,4 +1,4 @@
-import { company, contact, ui } from "@/content/site";
+import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { ContactForm } from "./ContactForm";
@@ -10,7 +10,8 @@ import { ContactForm } from "./ContactForm";
  * large. On desktop the column stays in view while the form is filled in.
  * Right: the inquiry form on a white card.
  */
-export function Contact() {
+export async function Contact() {
+  const { company, contact, ui } = await getSadrzaj();
   return (
     <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-[var(--header-h)] bg-mist">
       <div className="container-site section-y">
