@@ -62,7 +62,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   images: {
-    formats: ["image/avif", "image/webp"],
+    // WebP only: AVIF is ~20–30% smaller but far slower and memory-hungrier to encode on the server.
+    formats: ["image/webp"],
     // Photography is served up to ~1000px wide per column; 1920 covers full-bleed on large screens.
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920],
     // 75 for photographs, 90 for the logo (see src/components/brand/Logo.tsx).
