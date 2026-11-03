@@ -104,8 +104,8 @@ export async function Footer() {
               <nav aria-label={ui.footerNav} className="mt-5">
                 {/* Each link is a 32 px tall row (tap targets need at least 24 px); no gaps, so the rhythm stays as before */}
                 <ul>
-                  {navigation.map((item) => (
-                    <li key={item.href}>
+                  {navigation.map((item, i) => (
+                    <li key={i}>
                       <Link href={item.href} className="group flex min-h-8 w-fit items-center gap-2 text-white/80 hover:text-white">
                         <ArrowRight
                           size={12}

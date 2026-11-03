@@ -1,6 +1,15 @@
 import Image from "next/image";
 import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
+import { cn } from "@/lib/cn";
+
+/** Kolone činjenica po broju (urednik ih dodaje u panelu); pet i šest = tri u redu. */
+const KOLONE_CINJENICA: Record<number, string> = {
+  1: "sm:grid-cols-1",
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-2",
+};
 
 /**
  * Studio introduction, composed as one piece:
@@ -73,9 +82,16 @@ export async function StudioIntro() {
           </div>
 
           <Reveal delay={200} className="lg:col-span-8 lg:row-start-2">
-            <dl className="grid gap-x-8 sm:grid-cols-3">
+            {/* Do tri u redu; četiri = dva po dva. Više redova dobija razmak između redova. */}
+            <dl
+              className={cn(
+                "grid gap-x-8",
+                KOLONE_CINJENICA[studio.facts.length] ?? "sm:grid-cols-3",
+                studio.facts.length > 3 && "sm:gap-y-6",
+              )}
+            >
               {studio.facts.map((fact, i) => (
-                <div key={i}className="border-t border-line py-5 sm:pb-0">
+                <div key={i} className="border-t border-line py-5 sm:pb-0">
                   <dt className="t-small text-muted">{fact.term}</dt>
                   <dd className="mt-2 text-[1.0625rem] leading-snug tracking-[-0.01em] text-ink">{fact.detail}</dd>
                 </div>

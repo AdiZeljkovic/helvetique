@@ -137,7 +137,7 @@ export function ExpertiseList({ children }: { children: ReactNode }) {
             return (
               <Reveal
                 as="li"
-                key={item.title}
+                key={index}
                 delay={index * 90}
                 className="relative scroll-mt-[calc(var(--header-h)+0.75rem)] border-t border-ink/15 last:border-b"
               >
@@ -267,7 +267,7 @@ export function ExpertiseList({ children }: { children: ReactNode }) {
               const animate = isActive && previous !== null;
               return (
                 <div
-                  key={item.title}
+                  key={index}
                   aria-hidden={isActive ? undefined : true}
                   className={cn(
                     "absolute inset-0 overflow-hidden",
@@ -299,7 +299,7 @@ export function ExpertiseList({ children }: { children: ReactNode }) {
             <div aria-hidden="true" className="flex items-center gap-1.5">
               {items.map((item, index) => (
                 <span
-                  key={item.title}
+                  key={index}
                   className={cn(
                     "h-[2px] transition-[width,background-color] duration-700 ease-out",
                     index === active ? "w-10 bg-ink" : "w-4 bg-ink/20",

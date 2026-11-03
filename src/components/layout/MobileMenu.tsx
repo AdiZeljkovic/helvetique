@@ -68,7 +68,7 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
               const isActive = active === item.href.slice(1);
               return (
                 <li
-                  key={item.href}
+                  key={index}
                   className="border-b border-white/15 transition-[opacity,transform] duration-700 ease-out"
                   style={stagger(index + 1)}
                 >

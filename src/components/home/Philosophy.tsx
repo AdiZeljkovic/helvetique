@@ -3,10 +3,19 @@ import { getSadrzaj } from "@/content/cms";
 import { Reveal } from "@/components/ui/Reveal";
 import { ScrollWords } from "./ScrollWords";
 import { stepIcons } from "@/components/ui/LineIcons";
+import { cn } from "@/lib/cn";
+
+/** Kolone na desktopu po broju koraka (urednik ih dodaje u panelu); više od četiri ide u novi red. */
+const KOLONE_KORAKA: Record<number, string> = {
+  1: "lg:grid-cols-1",
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+};
 
 /**
  * The one dark, cinematic moment on the page. A full-bleed photograph, a large
- * statement whose words light up while scrolling, and the four working steps
+ * statement whose words light up while scrolling, and the working steps
  * at the foot, on one glass band read left to right like a process.
  */
 export async function Philosophy() {
@@ -43,16 +52,21 @@ export async function Philosophy() {
           </Reveal>
         </div>
 
-        {/* Steps: cells divided by hairlines, one row of four on desktop, two by two on tablets */}
-        <ol className="grid border border-white/15 bg-white/[0.04] backdrop-blur-md sm:grid-cols-2 lg:grid-cols-4">
+        {/* Steps: cells divided by hairlines; desktop up to four per row (more steps wrap), two per row on tablets */}
+        <ol
+          className={cn(
+            "grid border border-white/15 bg-white/[0.04] backdrop-blur-md sm:grid-cols-2",
+            KOLONE_KORAKA[Math.min(philosophy.steps.length, 4)],
+          )}
+        >
           {philosophy.steps.map((step, index) => {
             const Icon = stepIcons[step.icon];
             return (
               <Reveal
                 as="li"
-                key={step.title}
-                delay={index * 100}
-                className="group relative flex gap-5 border-white/15 p-5 transition-colors duration-700 hover:bg-white/[0.05] max-sm:not-first:border-t sm:flex-col sm:gap-0 sm:p-8 sm:max-lg:even:border-l sm:max-lg:nth-[n+3]:border-t lg:not-first:border-l xl:p-10"
+                key={index}
+                delay={(index % 4) * 100}
+                className="group relative flex gap-5 border-white/15 p-5 transition-colors duration-700 hover:bg-white/[0.05] max-sm:not-first:border-t sm:flex-col sm:gap-0 sm:p-8 sm:max-lg:even:border-l sm:max-lg:nth-[n+3]:border-t lg:not-nth-[4n+1]:border-l lg:nth-[n+5]:border-t xl:p-10"
               >
                 <span
                   aria-hidden="true"

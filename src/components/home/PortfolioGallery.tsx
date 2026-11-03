@@ -9,8 +9,16 @@ import { disciplineIcons } from "@/components/ui/LineIcons";
 /** Pointer has to rest on a panel this long before it opens, so sweeping across the row does not flicker. */
 const HOVER_INTENT_MS = 90;
 
+/** Tableti: kolone po broju kategorija (urednik ih dodaje u panelu); pet i šest = tri u redu. */
+const KOLONE: Record<number, string> = {
+  1: "lg:grid-cols-1",
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+};
+
 /**
- * Large screens: the four categories as one row of tall panels. The panel
+ * Large screens: the categories as one row of tall panels. The panel
  * under the pointer widens to show its photograph while the others narrow and
  * dim; the last one opened stays open.
  * Smaller screens: a grid of tiles, four across on tablets, two on phones.
@@ -36,14 +44,19 @@ export function PortfolioGallery() {
   useEffect(() => () => window.clearTimeout(hoverTimer.current), []);
 
   return (
-    <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 xl:flex xl:h-[clamp(32rem,38vw,40rem)]">
+    <ul
+      className={cn(
+        "grid grid-cols-2 gap-3 sm:gap-4 xl:flex xl:h-[clamp(32rem,38vw,40rem)]",
+        KOLONE[portfolio.categories.length] ?? "lg:grid-cols-3",
+      )}
+    >
       {portfolio.categories.map((category, index) => {
         const image = images[category.image];
         const Icon = disciplineIcons[category.icon];
         const isActive = index === active;
         return (
           <li
-            key={category.title}
+            key={index}
             className={cn(
               "relative aspect-[4/5] min-w-0 xl:aspect-auto xl:basis-0 xl:transition-[flex-grow] xl:duration-700 xl:ease-out motion-reduce:transition-none",
               isActive ? "xl:grow-[2.6]" : "xl:grow",

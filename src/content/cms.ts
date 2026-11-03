@@ -34,7 +34,9 @@ type Siroko<T> = [T] extends [string]
         ? { -readonly [K in keyof T]: K extends "icon" | "image" ? T[K] : Siroko<T[K]> }
         : T;
 
-export type Sadrzaj = Siroko<typeof zadano> & { images: Record<ImageKey, SiteImage> };
+/** Registar slika: ključevi iz koda + `cms-…` za stavke dodane u panelu. */
+export type Slike = Record<ImageKey, SiteImage> & Record<string, SiteImage>;
+export type Sadrzaj = Siroko<typeof zadano> & { images: Slike };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = Record<string, any>;
@@ -75,10 +77,18 @@ function slika(v: unknown, z: SiteImage): SiteImage {
   };
 }
 
-/** Lista fiksne dužine: stavka iz CMS-a na istom mjestu, inače iz koda. */
-function poRedu<Z, R>(z: readonly Z[], v: unknown, mapiraj: (zi: Z, vi: J, i: number) => R): R[] {
+/**
+ * Lista iz panela, red po red — urednik dodaje, briše i preslaže. Red nosi `kod` = redni
+ * broj stavke u kodu: po njemu prazno polje dobija tekst (i sliku) te stavke i kad je red
+ * premješten. Novi red nema `kod` (`zi` je prazan). Panel bez redova → lista iz koda.
+ */
+function poKodu<Z, R>(z: readonly Z[], v: unknown, mapiraj: (zi: Z | undefined, vi: J, i: number) => R): R[] {
   const lista = Array.isArray(v) ? (v as J[]) : [];
-  return z.map((zi, i) => mapiraj(zi, lista[i] ?? {}, i));
+  if (!lista.length) return z.map((zi, i) => mapiraj(zi, {}, i));
+  return lista.map((vi, i) => {
+    const k = typeof vi?.kod === "string" && /^\d+$/.test(vi.kod) ? Number(vi.kod) : -1;
+    return mapiraj(z[k], vi, i);
+  });
 }
 
 const izSkupa = <T extends string>(v: unknown, z: T, dozvoljeno: readonly string[]): T =>
@@ -90,8 +100,14 @@ const SIDRA = ["#studio", "#expertise", "#portfolio", "#contact"] as const;
 
 function mapiraj(d: J | null): Sadrzaj {
   const doc = d ?? {};
-  const images: Record<ImageKey, SiteImage> = { ...zadaneSlike };
+  const images: Slike = { ...zadaneSlike };
   const z = zadano;
+  /** Slika stavke: ključ iz koda, ili novi (`cms-portfolio-5`) za stavku dodanu u panelu. */
+  const slikaStavke = (lista: string, zi: { image: ImageKey } | undefined, prva: ImageKey, vi: J, i: number) => {
+    const kljuc = zi?.image ?? `cms-${lista}-${i}`;
+    images[kljuc] = slika(vi.slika, zadaneSlike[zi?.image ?? prva]);
+    return kljuc as ImageKey;
+  };
 
   // ----- slike vezane za sekcije
   images.hero = slika(doc.hero?.slika, zadaneSlike.hero);
@@ -99,25 +115,21 @@ function mapiraj(d: J | null): Sadrzaj {
   images.featureDetail = slika(doc.studio?.slikaUspravna, zadaneSlike.featureDetail);
   images.philosophy = slika(doc.philosophy?.slika, zadaneSlike.philosophy);
 
-  const expertiseItems = poRedu(z.expertise.items, doc.expertise?.items, (zi, vi) => {
-    images[zi.image] = slika(vi.slika, zadaneSlike[zi.image]);
-    return {
-      title: tekst(vi.title, zi.title),
-      description: tekst(vi.description, zi.description),
-      scope: redovi(vi.scope, zi.scope),
-      image: zi.image,
-      icon: izSkupa(vi.icon, zi.icon, IKONE_DISCIPLINA),
-    };
-  });
+  const prvaDisciplina = z.expertise.items[0];
+  const expertiseItems = poKodu(z.expertise.items, doc.expertise?.items, (zi, vi, i) => ({
+    title: tekst(vi.title, zi?.title ?? ""),
+    description: tekst(vi.description, zi?.description ?? ""),
+    scope: redovi(vi.scope, zi?.scope ?? []),
+    image: slikaStavke("expertise", zi, prvaDisciplina.image, vi, i),
+    icon: izSkupa(vi.icon, zi?.icon ?? prvaDisciplina.icon, IKONE_DISCIPLINA),
+  }));
 
-  const categories = poRedu(z.portfolio.categories, doc.portfolio?.categories, (zi, vi) => {
-    images[zi.image] = slika(vi.slika, zadaneSlike[zi.image]);
-    return {
-      title: tekst(vi.title, zi.title),
-      image: zi.image,
-      icon: izSkupa(vi.icon, zi.icon, IKONE_DISCIPLINA),
-    };
-  });
+  const prvaKategorija = z.portfolio.categories[0];
+  const categories = poKodu(z.portfolio.categories, doc.portfolio?.categories, (zi, vi, i) => ({
+    title: tekst(vi.title, zi?.title ?? ""),
+    image: slikaStavke("portfolio", zi, prvaKategorija.image, vi, i),
+    icon: izSkupa(vi.icon, zi?.icon ?? prvaKategorija.icon, IKONE_DISCIPLINA),
+  }));
 
   // ----- firma
   const c = (doc.company ?? {}) as J;
@@ -144,9 +156,9 @@ function mapiraj(d: J | null): Sadrzaj {
   return {
     company,
     portmix: spoji(z.portmix, doc.portmix),
-    navigation: poRedu(z.navigation, doc.navigation, (zi, vi) => ({
-      label: tekst(vi.label, zi.label),
-      href: izSkupa(vi.href, zi.href, SIDRA),
+    navigation: poKodu(z.navigation, doc.navigation, (zi, vi) => ({
+      label: tekst(vi.label, zi?.label ?? ""),
+      href: izSkupa(vi.href, zi?.href ?? SIDRA[0], SIDRA),
     })),
     ui: {
       ...spoji(z.ui, doc.ui),
@@ -160,9 +172,9 @@ function mapiraj(d: J | null): Sadrzaj {
     studio: {
       ...spoji(z.studio, doc.studio),
       headline: redovi(doc.studio?.headline, z.studio.headline),
-      facts: poRedu(z.studio.facts, doc.studio?.facts, (zi, vi) => ({
-        term: tekst(vi.term, zi.term),
-        detail: tekst(vi.detail, zi.detail),
+      facts: poKodu(z.studio.facts, doc.studio?.facts, (zi, vi) => ({
+        term: tekst(vi.term, zi?.term ?? ""),
+        detail: tekst(vi.detail, zi?.detail ?? ""),
       })),
     },
     expertise: {
@@ -175,10 +187,10 @@ function mapiraj(d: J | null): Sadrzaj {
     philosophy: {
       statement: tekst(doc.philosophy?.statement, z.philosophy.statement),
       text: tekst(doc.philosophy?.text, z.philosophy.text),
-      steps: poRedu(z.philosophy.steps, doc.philosophy?.steps, (zi, vi) => ({
-        title: tekst(vi.title, zi.title),
-        text: tekst(vi.text, zi.text),
-        icon: izSkupa(vi.icon, zi.icon, IKONE_KORAKA),
+      steps: poKodu(z.philosophy.steps, doc.philosophy?.steps, (zi, vi) => ({
+        title: tekst(vi.title, zi?.title ?? ""),
+        text: tekst(vi.text, zi?.text ?? ""),
+        icon: izSkupa(vi.icon, zi?.icon ?? IKONE_KORAKA[0], IKONE_KORAKA),
       })),
     },
     portfolio: {

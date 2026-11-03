@@ -80,10 +80,10 @@ export function Header() {
 
           <nav aria-label={ui.primaryNav} className="hidden items-center gap-10 lg:flex">
             <ul className="flex items-center gap-8">
-              {navigation.map((item) => {
+              {navigation.map((item, i) => {
                 const isActive = active === item.href.slice(1);
                 return (
-                  <li key={item.href}>
+                  <li key={i}>
                     <Link
                       href={item.href}
                       aria-current={isActive ? "true" : undefined}
